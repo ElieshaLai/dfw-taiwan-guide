@@ -8,7 +8,7 @@ export default function Navbar() {
       fontFamily: "sans-serif"
     }}>
       <div style={{ fontWeight: "bold" }}>
-        DFW 台灣生活指南
+        DFW 台灣人生活指南
       </div>
 
       <div style={{ display: "flex", gap: "16px" }}>
