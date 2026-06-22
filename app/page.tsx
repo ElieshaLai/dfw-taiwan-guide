@@ -2,12 +2,12 @@ import Navbar from "../components/Navbar";
 
 export default function Home() {
   return (
-    <main  style={{
-    fontFamily: "sans-serif",
-    padding: "0 16px",
-    maxWidth: "1100px",
-    margin: "0 auto",
-  }}>
+    <main style={{
+      fontFamily: "sans-serif",
+      padding: "0 16px",
+      maxWidth: "1100px",
+      margin: "0 auto",
+    }}>
       <Navbar />
 
       {/* HERO 區 */}
@@ -42,10 +42,12 @@ export default function Home() {
           maxWidth: "1000px",
         }}
       >
-        <div style={cardStyle}>
-          🏠 租屋與生活區域
-          <p style={descStyle}>Dallas / Plano / Frisco 居住比較與租屋資訊</p>
-        </div>
+        <a href="/guides/rent" style={{ textDecoration: "none", color: "inherit" }}>
+          <div style={cardStyle}>
+            🏠 租屋與生活區域
+            <p style={descStyle}>Dallas / Plano / Frisco 居住比較與租屋資訊</p>
+          </div>
+        </a>
 
         <div style={cardStyle}>
           🏫 學區分析
