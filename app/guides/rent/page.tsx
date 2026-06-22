@@ -6,7 +6,7 @@ export default function GuideTemplate() {
             style={{
                 fontFamily: "sans-serif",
                 padding: "0 20px",
-                maxWidth: "900px",
+                maxWidth: "1200px",
                 margin: "0 auto",
                 textAlign: "left",
             }}

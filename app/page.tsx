@@ -1,89 +1,68 @@
+// app/page.tsx
+import Link from "next/link";
 import Navbar from "../components/Navbar";
 
 export default function Home() {
   return (
-    <main style={{
-      fontFamily: "sans-serif",
-      padding: "0 16px",
-      maxWidth: "1100px",
-      margin: "0 auto",
-    }}>
+    <>
       <Navbar />
 
-      {/* HERO 區 */}
-      <section style={{ marginTop: "24px", maxWidth: "900px" }}>
-        <h1 style={{ fontSize: "clamp(22px, 4vw, 32px)", fontWeight: "bold" }}>
-          DFW 台灣人生活指南
-        </h1>
+      <main>
 
-        <h2 style={{ fontSize: "18px", marginTop: "12px", color: "#333" }}>
-          幫助 Dallas–Fort Worth 的台灣人快速適應生活 🇹🇼🇺🇸
-        </h2>
+        {/* Hero — 漸層佔位，之後換成 bg-[url('/hero.jpg')] bg-cover bg-center */}
+        <section
+          className="
+            relative
+            bg-gradient-to-br from-gray-900 via-gray-800 to-red-950
+            text-white
+          "
+        >
+          {/* 之後有圖片時加這層暗化遮罩會更好看 */}
+          <div className="absolute inset-0 bg-black/40" />
 
-        <p style={{ marginTop: "8px", color: "#666", lineHeight: "1.6" }}>
-          提供租屋、學區、美食與生活流程整理，讓剛來美國的你更快上手。
-        </p>
-      </section>
+          <div className="relative max-w-5xl mx-auto px-5 py-32 text-center">
+            <div className="inline-block bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 text-sm font-medium px-3 py-1 rounded-full mb-6">
+              達拉斯台灣人社群
+            </div>
 
-      {/* CTA */}
-      <section style={{ marginTop: "28px" }}>
-        <p style={{ fontWeight: 500 }}>
-          從哪裡開始？選一個你現在最需要的生活主題 👇
-        </p>
-      </section>
+            <h1 className="text-5xl sm:text-6xl font-bold mb-5 leading-tight tracking-tight">
+              Welcome to{" "}
+              <span className="text-red-400">DFW</span>
+            </h1>
 
-      {/* 卡片區 */}
-      <section
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
-          gap: "16px",
-          marginTop: "16px",
-          maxWidth: "1000px",
-        }}
-      >
-        <a href="/guides/rent" style={{ textDecoration: "none", color: "inherit" }}>
-          <div style={cardStyle}>
-            🏠 租屋與生活區域
-            <p style={descStyle}>Dallas / Plano / Frisco 居住比較與租屋資訊</p>
+            <p className="text-xl text-white/70 mb-4">
+              給台灣人的 Dallas–Fort Worth 生活指南
+            </p>
+
+            <p className="max-w-xl mx-auto text-white/50 leading-relaxed">
+              從租屋、學區到美食與生活資訊，協助你快速適應德州生活。
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mt-10">
+              <Link
+                href="/guides/rent"
+                className="bg-red-500 hover:bg-red-400 text-white px-7 py-3 rounded-xl font-medium transition-colors"
+              >
+                開始探索
+              </Link>
+              <Link
+                href="/community"
+                className="bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 text-white px-7 py-3 rounded-xl font-medium transition-colors"
+              >
+                社群活動
+              </Link>
+            </div>
           </div>
-        </a>
+        </section>
 
-        <div style={cardStyle}>
-          🏫 學區分析
-          <p style={descStyle}>學校評價、學區比較與家庭選擇指南</p>
+        {/* 之後在這裡加精選推薦、最新活動等 section */}
+        <div className="max-w-5xl mx-auto px-5 pb-20">
+          <p className="text-center text-xs text-gray-300 mt-16">
+            DFW 台灣人生活指南 · 持續更新中
+          </p>
         </div>
 
-        <div style={cardStyle}>
-          🍜 台灣美食地圖
-          <p style={descStyle}>亞洲超市、台灣餐廳與必吃推薦</p>
-        </div>
-
-        <div style={cardStyle}>
-          📄 生活流程指南
-          <p style={descStyle}>銀行、駕照、保險、開車等新手教學</p>
-        </div>
-      </section>
-
-      {/* 底部資訊 */}
-      <section style={{ marginTop: "40px", color: "#888", fontSize: "13px" }}>
-        <p>持續更新中 · DFW 台灣社群整理平台</p>
-      </section>
-    </main>
+      </main>
+    </>
   );
 }
-
-const cardStyle = {
-  padding: "18px",
-  border: "1px solid #e5e5e5",
-  borderRadius: "12px",
-  cursor: "pointer",
-  background: "#fff",
-};
-
-const descStyle = {
-  fontSize: "12px",
-  color: "#666",
-  marginTop: "6px",
-  lineHeight: "1.4",
-};
