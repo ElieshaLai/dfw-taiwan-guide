@@ -25,8 +25,8 @@ export default function Navbar() {
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 shrink-0">
-            <span className="text-2xl font-bold text-red-400 tracking-tight">DFW</span>
-            <span className="text-sm text-gray-400 hidden sm:block">台灣生活指南</span>
+            <span className="text-2xl font-bold text-red-400 tracking-tight">DFW Taiwan Guide</span>
+            <span className="text-sm text-gray-400 hidden sm:block"></span>
           </Link>
 
           {/* 搜尋列（目前 UI only，之後可接功能） */}

@@ -22,16 +22,15 @@ export default function Home() {
 
           <div className="relative max-w-5xl mx-auto px-5 py-32 text-center">
             <div className="inline-block bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 text-sm font-medium px-3 py-1 rounded-full mb-6">
-              達拉斯台灣人社群
+              達拉斯 · 台灣人社群
             </div>
 
             <h1 className="text-5xl sm:text-6xl font-bold mb-5 leading-tight tracking-tight">
-              Welcome to{" "}
-              <span className="text-red-400">DFW</span>
+              <span className="text-red-400">DFW</span> Taiwan Guide
             </h1>
 
             <p className="text-xl text-white/70 mb-4">
-              給台灣人的 Dallas–Fort Worth 生活指南
+              Your guide to life in Dallas–Fort Worth
             </p>
 
             <p className="max-w-xl mx-auto text-white/50 leading-relaxed">
@@ -58,7 +57,7 @@ export default function Home() {
         {/* 之後在這裡加精選推薦、最新活動等 section */}
         <div className="max-w-5xl mx-auto px-5 pb-20">
           <p className="text-center text-xs text-gray-300 mt-16">
-            DFW 台灣人生活指南 · 持續更新中
+            DFW Taiwan Guide · 持續更新中
           </p>
         </div>
 
