@@ -19,29 +19,23 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50">
 
-      {/* 第一層：深棕 Header */}
+      {/* 第一層：深棕 Header — 全寬，內容貼左 */}
       <div style={{ backgroundColor: "#6B4423" }}>
-        <div className="max-w-5xl mx-auto px-5 h-20 flex items-center justify-between gap-4">
+        <div className="w-full px-6 h-20 flex items-center justify-between gap-4">
 
-          {/* Logo：三行疊排 */}
-          <Link href="/" className="shrink-0 leading-none flex flex-col">
-            <span
-              className="font-black tracking-widest uppercase"
-              style={{ color: "#E8A818", fontSize: "22px", lineHeight: "1.15" }}
-            >
+          {/* Logo 貼左 */}
+          <Link href="/" className="shrink-0 flex flex-col items-start leading-none">
+            <span className="font-black tracking-widest uppercase"
+              style={{ color: "#E8A818", fontSize: "20px", lineHeight: "1.1" }}>
               DFW
             </span>
-            <span
-              className="font-bold tracking-widest uppercase"
-              style={{ color: "#C49A6C", fontSize: "13px", lineHeight: "1.2" }}
-            >
-              TAIWAN
+            <span className="font-semibold tracking-widest uppercase"
+              style={{ color: "#C49A6C", fontSize: "18px", lineHeight: "1.3", letterSpacing: "0.2em" }}>
+              Taiwan
             </span>
-            <span
-              className="font-medium tracking-widest uppercase"
-              style={{ color: "#C49A6C", fontSize: "11px", lineHeight: "1.2", opacity: 0.75 }}
-            >
-              GUIDE
+            <span className="font-semibold tracking-widest uppercase"
+              style={{ color: "#C49A6C", fontSize: "18px", lineHeight: "1.3", letterSpacing: "0.2em" }}>
+              Guide
             </span>
           </Link>
 
@@ -50,12 +44,8 @@ export default function Navbar() {
             className="flex items-center gap-2 rounded-xl px-4 py-2 w-full max-w-sm"
             style={{ backgroundColor: "#4e2e10", border: "1px solid #8B5A2B" }}
           >
-            <svg
-              className="w-4 h-4 shrink-0"
-              style={{ color: "#C49A6C" }}
-              fill="none" stroke="currentColor" strokeWidth={2}
-              viewBox="0 0 24 24"
-            >
+            <svg className="w-4 h-4 shrink-0" style={{ color: "#C49A6C" }}
+              fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <circle cx="11" cy="11" r="8" />
               <path d="M21 21l-4.35-4.35" strokeLinecap="round" />
             </svg>
@@ -72,19 +62,31 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* 第二層：分類 Tab Navbar */}
+      {/* 第二層：分類 Tab — 全寬貼左 */}
       <nav style={{ backgroundColor: "#F9F2E8", borderBottom: "2px solid #C49A6C" }}>
-        <div className="max-w-5xl mx-auto px-5 flex gap-1 overflow-x-auto scrollbar-none">
+        <div className="w-full px-6 flex gap-1 overflow-x-auto scrollbar-none">
           {navLinks.map((link) => {
             const isActive = pathname.startsWith(link.href);
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className="whitespace-nowrap px-5 py-3 text-sm font-medium border-b-2 transition-colors"
+                className="whitespace-nowrap px-5 py-3 text-sm font-medium border-b-2 transition-all duration-150"
                 style={{
                   borderBottomColor: isActive ? "#A63F24" : "transparent",
                   color: isActive ? "#A63F24" : "#6B4423",
+                }}
+                onMouseEnter={(e) => {
+                  if (!isActive) {
+                    (e.currentTarget as HTMLElement).style.color = "#A63F24";
+                    (e.currentTarget as HTMLElement).style.backgroundColor = "#f0e4d0";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive) {
+                    (e.currentTarget as HTMLElement).style.color = "#6B4423";
+                    (e.currentTarget as HTMLElement).style.backgroundColor = "transparent";
+                  }
                 }}
               >
                 {link.label}
