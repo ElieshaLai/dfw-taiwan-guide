@@ -46,52 +46,7 @@ export default function Home() {
           style={{ minHeight: "88vh", backgroundColor: "#6B4423", padding: "48px 40px" }}
         >
           {/* 左側：文字區 */}
-          <div className="flex flex-col justify-center md:w-1/2 md:pr-12 pb-10 md:pb-0 relative">
-
-            {/* 台灣小吃插畫裝飾 */}
-            <svg
-              aria-hidden="true"
-              style={{ position: "absolute", top: 0, right: 0, opacity: 0.18, pointerEvents: "none" }}
-              width="220" height="320" viewBox="0 0 220 320"
-            >
-              {/* 珍珠奶茶 */}
-              <g transform="translate(20, 20)">
-                <rect x="18" y="30" width="34" height="55" rx="6" fill="#C49A6C" stroke="#E8C9A0" strokeWidth="1.5"/>
-                <rect x="24" y="26" width="22" height="8" rx="3" fill="#E8C9A0"/>
-                <line x1="35" y1="18" x2="35" y2="26" stroke="#E8C9A0" strokeWidth="2" strokeLinecap="round"/>
-                <circle cx="28" cy="72" r="4" fill="#6B4423"/>
-                <circle cx="36" cy="76" r="4" fill="#6B4423"/>
-                <circle cx="44" cy="72" r="4" fill="#6B4423"/>
-                <text x="35" y="100" textAnchor="middle" fontSize="9" fill="#E8C9A0" fontFamily="sans-serif">珍奶</text>
-              </g>
-              {/* 雞排 */}
-              <g transform="translate(110, 10)">
-                <ellipse cx="35" cy="45" rx="28" ry="38" fill="#D4832A" stroke="#E8C9A0" strokeWidth="1.5"/>
-                <ellipse cx="35" cy="45" rx="20" ry="28" fill="none" stroke="#E8C9A0" strokeWidth="0.8" strokeDasharray="3,3"/>
-                <line x1="35" y1="6" x2="35" y2="14" stroke="#E8C9A0" strokeWidth="2" strokeLinecap="round"/>
-                <text x="35" y="100" textAnchor="middle" fontSize="9" fill="#E8C9A0" fontFamily="sans-serif">雞排</text>
-              </g>
-              {/* 地瓜球 */}
-              <g transform="translate(10, 150)">
-                <circle cx="20" cy="20" r="12" fill="#E8A818" stroke="#E8C9A0" strokeWidth="1.2"/>
-                <circle cx="42" cy="16" r="10" fill="#E8A818" stroke="#E8C9A0" strokeWidth="1.2"/>
-                <circle cx="30" cy="36" r="11" fill="#D4832A" stroke="#E8C9A0" strokeWidth="1.2"/>
-                <circle cx="52" cy="32" r="9"  fill="#E8A818" stroke="#E8C9A0" strokeWidth="1.2"/>
-                <text x="30" y="62" textAnchor="middle" fontSize="9" fill="#E8C9A0" fontFamily="sans-serif">地瓜球</text>
-              </g>
-              {/* 臭豆腐 */}
-              <g transform="translate(110, 140)">
-                <rect x="8" y="20" width="50" height="36" rx="5" fill="#8B5E3C" stroke="#E8C9A0" strokeWidth="1.5"/>
-                <rect x="14" y="26" width="12" height="12" rx="2" fill="#6B4423"/>
-                <rect x="30" y="26" width="12" height="12" rx="2" fill="#6B4423"/>
-                <rect x="22" y="38" width="12" height="12" rx="2" fill="#6B4423"/>
-                <rect x="5"  y="56" width="56" height="8"  rx="3" fill="#A63F24" stroke="#E8C9A0" strokeWidth="1"/>
-                <text x="33" y="80" textAnchor="middle" fontSize="9" fill="#E8C9A0" fontFamily="sans-serif">臭豆腐</text>
-              </g>
-              <circle cx="100" cy="130" r="2" fill="#E8C9A0" opacity="0.6"/>
-              <circle cx="80"  cy="200" r="1.5" fill="#E8A818" opacity="0.5"/>
-              <circle cx="150" cy="250" r="2" fill="#E8C9A0" opacity="0.4"/>
-            </svg>
+          <div className="flex flex-col justify-center md:w-1/2 md:pr-12 pb-10 md:pb-0">
             <h1
               className="font-black leading-none mb-4"
               style={{
