@@ -40,17 +40,13 @@ export default function Home() {
       <Navbar />
 
       <main>
-        {/* Hero — 左文右圖 */}
+        {/* Hero */}
         <section
-          className="flex flex-col md:flex-row"
-          style={{ minHeight: "88vh" }}
+          className="flex flex-col md:flex-row items-center"
+          style={{ minHeight: "88vh", backgroundColor: "#6B4423", padding: "48px 40px" }}
         >
           {/* 左側：文字區 */}
-          <div
-            className="flex flex-col justify-center px-8 py-16 md:py-0 md:w-1/2"
-            style={{ backgroundColor: "#6B4423" }}
-          >
-            {/* H1：時間問候 */}
+          <div className="flex flex-col justify-center md:w-1/2 md:pr-12 pb-10 md:pb-0">
             <h1
               className="font-black leading-none mb-4"
               style={{
@@ -79,13 +75,9 @@ export default function Home() {
                 從哪裡開始？
               </span>
               <svg
-                width="18" height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#E8C9A0"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+                width="18" height="18" viewBox="0 0 24 24"
+                fill="none" stroke="#E8C9A0" strokeWidth="2.5"
+                strokeLinecap="round" strokeLinejoin="round"
                 style={{ animation: "bounce-x 1.8s infinite" }}
               >
                 <path d="M5 12h14M12 5l7 7-7 7" />
@@ -121,21 +113,27 @@ export default function Home() {
             </div>
           </div>
 
-          {/* 右側：圖片區 — 換圖只要換 /hero.jpg */}
-          <div className="relative md:w-1/2" style={{ minHeight: "50vh" }}>
+          {/* 右側：圖片，有圓角與陰影，完整顯示 */}
+          <div
+            className="md:w-1/2 w-full"
+            style={{
+              borderRadius: "16px",
+              overflow: "hidden",
+              boxShadow: "0 24px 64px rgba(0,0,0,0.45)",
+              border: "1px solid rgba(196,154,108,0.25)",
+            }}
+          >
             <Image
               src="/hero.jpg"
               alt="台北101夜景"
-              fill
-              style={{ objectFit: "cover", objectPosition: "center" }}
-              priority
-            />
-            {/* 左側漸層，讓文字區與圖片區的邊界柔和 */}
-            <div
-              className="absolute inset-0"
+              width={900}
+              height={600}
               style={{
-                background: "linear-gradient(to right, #6B4423 0%, transparent 20%)",
+                width: "100%",
+                height: "auto",
+                display: "block",
               }}
+              priority
             />
           </div>
         </section>
