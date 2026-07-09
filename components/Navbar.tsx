@@ -10,6 +10,9 @@ const navLinks = [
   { href: "/education",   label: "🏫 學校與教育" },
   { href: "/restaurants", label: "🍜 美食與購物" },
   { href: "/life",        label: "📘 新生活指南" },
+  { href: "/directory",   label: "📇 名片與推薦" },
+  { href: "/events",      label: "📅 活動日曆" },
+  { href: "/explore",     label: "🎉 社群與玩樂" },
 ];
 
 export default function Navbar() {
