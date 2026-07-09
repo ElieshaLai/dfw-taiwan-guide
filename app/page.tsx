@@ -1,6 +1,7 @@
 // app/page.tsx
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
@@ -39,50 +40,38 @@ export default function Home() {
       <Navbar />
 
       <main>
-        {/* Hero — 垂直置中 */}
+        {/* Hero — 左文右圖 */}
         <section
-          className="relative text-white"
-          style={{
-            backgroundImage: "url('/hero.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            height: "88vh",
-          }}
+          className="flex flex-col md:flex-row"
+          style={{ minHeight: "88vh" }}
         >
-          {/* 暗化遮罩 */}
+          {/* 左側：文字區 */}
           <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(to top, rgba(40,15,5,0.88) 0%, rgba(40,15,5,0.45) 55%, rgba(40,15,5,0.1) 100%)",
-            }}
-          />
-
-          {/* 內容：垂直置中 */}
-          <div className="relative h-full flex flex-col items-center justify-center text-center px-5">
-
+            className="flex flex-col justify-center px-8 py-16 md:py-0 md:w-1/2"
+            style={{ backgroundColor: "#6B4423" }}
+          >
             {/* H1：時間問候 */}
             <h1
-              className="font-black leading-none mb-5"
+              className="font-black leading-none mb-4"
               style={{
-                fontSize: "clamp(52px, 12vw, 80px)",
+                fontSize: "clamp(52px, 8vw, 88px)",
                 color: "#E8C9A0",
-                textShadow: "0 2px 32px rgba(0,0,0,0.5)",
+                textShadow: "0 2px 24px rgba(0,0,0,0.3)",
               }}
             >
               {greeting}
             </h1>
 
             <p
-              className="mb-8 leading-relaxed max-w-md"
+              className="mb-8 leading-relaxed max-w-sm"
               style={{ color: "rgba(255,255,255,0.6)", fontSize: "15px" }}
             >
               給台灣人的 Dallas–Fort Worth 生活指南。<br />
               從租屋、學區到美食與生活資訊，協助你快速適應德州生活。
             </p>
 
-            {/* 從哪裡開始 + 箭頭 — 在關鍵字上面 */}
-            <div className="flex flex-col items-center gap-1 mb-5">
+            {/* 從哪裡開始 + 箭頭 */}
+            <div className="flex items-center gap-2 mb-4">
               <span
                 className="text-sm font-medium tracking-widest"
                 style={{ color: "#E8C9A0" }}
@@ -90,28 +79,28 @@ export default function Home() {
                 從哪裡開始？
               </span>
               <svg
-                width="22" height="22"
+                width="18" height="18"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="#E8C9A0"
                 strokeWidth="2.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                style={{ animation: "bounce 1.8s infinite" }}
+                style={{ animation: "bounce-x 1.8s infinite" }}
               >
-                <path d="M12 5v14M5 12l7 7 7-7" />
+                <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </div>
 
             {/* 關鍵字按鈕 */}
-            <div className="flex flex-wrap gap-2 justify-center max-w-lg">
+            <div className="flex flex-wrap gap-2 max-w-sm">
               {keywords.map((k) => (
                 <Link
                   key={k.href}
                   href={k.href}
                   className="text-xs font-medium px-4 py-2 rounded-full transition-all duration-150"
                   style={{
-                    backgroundColor: "rgba(255,255,255,0.1)",
+                    backgroundColor: "rgba(255,255,255,0.08)",
                     border: "1px solid rgba(196,154,108,0.4)",
                     color: "#C49A6C",
                   }}
@@ -121,7 +110,7 @@ export default function Home() {
                     (e.currentTarget as HTMLElement).style.color = "#E8A818";
                   }}
                   onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(255,255,255,0.1)";
+                    (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(255,255,255,0.08)";
                     (e.currentTarget as HTMLElement).style.borderColor = "rgba(196,154,108,0.4)";
                     (e.currentTarget as HTMLElement).style.color = "#C49A6C";
                   }}
@@ -130,7 +119,24 @@ export default function Home() {
                 </Link>
               ))}
             </div>
+          </div>
 
+          {/* 右側：圖片區 — 換圖只要換 /hero.jpg */}
+          <div className="relative md:w-1/2" style={{ minHeight: "50vh" }}>
+            <Image
+              src="/hero.jpg"
+              alt="台北101夜景"
+              fill
+              style={{ objectFit: "cover", objectPosition: "center" }}
+              priority
+            />
+            {/* 左側漸層，讓文字區與圖片區的邊界柔和 */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background: "linear-gradient(to right, #6B4423 0%, transparent 20%)",
+              }}
+            />
           </div>
         </section>
 
@@ -196,9 +202,9 @@ export default function Home() {
       </main>
 
       <style>{`
-        @keyframes bounce {
-          0%, 100% { transform: translateY(0); }
-          50%       { transform: translateY(6px); }
+        @keyframes bounce-x {
+          0%, 100% { transform: translateX(0); }
+          50%       { transform: translateX(5px); }
         }
       `}</style>
     </>
