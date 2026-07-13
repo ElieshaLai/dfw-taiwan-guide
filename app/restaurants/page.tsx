@@ -161,7 +161,7 @@ export default function RestaurantsPage() {
                         color: isActive ? "white" : "#6B4423",
                       }}
                     >
-                      📍 {city}
+                      {city}
                     </button>
                   );
                 })}
@@ -189,7 +189,7 @@ export default function RestaurantsPage() {
                   className="inline-flex items-center gap-1 text-xs px-3 py-1 rounded-full font-medium"
                   style={{ backgroundColor: "#A63F24", color: "white" }}
                 >
-                  📍 {city}
+                  {city}
                   <button onClick={() => removeTag("city", city)} className="ml-1 hover:opacity-70">✕</button>
                 </span>
               ))}
@@ -245,7 +245,7 @@ export default function RestaurantsPage() {
                   </span>
                 </div>
                 <p className="text-xs mb-2" style={{ color: "#C49A6C" }}>
-                  📍 {r.city}
+                  {r.city}
                 </p>
                 {r.description && (
                   <p className="text-sm mb-3" style={{ color: "#888" }}>{r.description}</p>
