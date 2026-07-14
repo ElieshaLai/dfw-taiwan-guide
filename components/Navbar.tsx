@@ -211,55 +211,22 @@ export default function Navbar() {
               Icon={link.lucide} isActive={pathname.startsWith(link.href)} />
           ))}
 
-          {/* 美食與購物手機版 — 展開子選單 */}
-          <div className="relative">
-            <button
-              onClick={() => setFoodOpen((v) => !v)}
-              className="flex items-center gap-1.5 px-4 py-3 border-b-2 transition-all duration-150 whitespace-nowrap"
-              style={{
-                borderBottomColor: isFoodActive ? "#A63F24" : foodOpen ? "#C49A6C" : "transparent",
-                color: isFoodActive ? "#A63F24" : "#6B4423",
-                fontSize: "14px",
-                fontWeight: 500,
-                background: "none",
-              }}
-            >
-              <UtensilsCrossed size={17} strokeWidth={1.8} />
-              <span>美食與購物</span>
-              <span style={{ fontSize: "10px", marginLeft: "2px" }}>{foodOpen ? "▲" : "▼"}</span>
-            </button>
-
-            {/* 展開子選單 */}
-            {foodOpen && (
-              <div
-                className="absolute top-full left-0 z-50 shadow-lg rounded-b-xl overflow-hidden"
-                style={{ backgroundColor: "white", border: "1px solid #e8d8c4", minWidth: "140px" }}
-              >
-                <Link
-                  href="/restaurants"
-                  onClick={() => setFoodOpen(false)}
-                  className="flex items-center gap-2 px-4 py-3 transition-colors"
-                  style={{ color: "#6B4423", fontSize: "13px", borderBottom: "1px solid #f0e4d0" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#fdf0e0")}
-                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
-                >
-                  <MapIcon size={14} style={{ color: "#A63F24" }} />
-                  <span>美食地圖</span>
-                </Link>
-                <Link
-                  href="/shopping"
-                  onClick={() => setFoodOpen(false)}
-                  className="flex items-center gap-2 px-4 py-3 transition-colors"
-                  style={{ color: "#6B4423", fontSize: "13px" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#fdf0e0")}
-                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
-                >
-                  <ShoppingBagIcon size={14} style={{ color: "#A63F24" }} />
-                  <span>購物地圖</span>
-                </Link>
-              </div>
-            )}
-          </div>
+          {/* 美食與購物手機版 */}
+          <button
+            onClick={() => setFoodOpen((v) => !v)}
+            className="flex items-center gap-1.5 px-4 py-3 border-b-2 transition-all duration-150 whitespace-nowrap"
+            style={{
+              borderBottomColor: isFoodActive ? "#A63F24" : foodOpen ? "#C49A6C" : "transparent",
+              color: isFoodActive ? "#A63F24" : "#6B4423",
+              fontSize: "14px",
+              fontWeight: 500,
+              background: "none",
+            }}
+          >
+            <UtensilsCrossed size={17} strokeWidth={1.8} />
+            <span>美食與購物</span>
+            <span style={{ fontSize: "10px", marginLeft: "2px" }}>{foodOpen ? "▲" : "▼"}</span>
+          </button>
 
           {navLinksAfter.map((link) => (
             <MobileTab key={link.href} href={link.href} label={link.label}
@@ -267,6 +234,40 @@ export default function Navbar() {
           ))}
         </div>
       </div>
+
+      {/* 手機版美食子選單 — fixed 避免被 overflow 裁切 */}
+      {foodOpen && (
+        <div
+          className="sm:hidden fixed left-0 right-0 z-50 shadow-lg"
+          style={{
+            top: "calc(var(--navbar-height, 120px))",
+            backgroundColor: "white",
+            border: "1px solid #e8d8c4",
+            borderTop: "none",
+          }}
+        >
+          <Link
+            href="/restaurants"
+            onClick={() => setFoodOpen(false)}
+            className="flex items-center gap-3 px-6 py-4 transition-colors"
+            style={{ color: "#6B4423", borderBottom: "1px solid #f0e4d0" }}
+          >
+            <MapIcon size={16} style={{ color: "#A63F24" }} />
+            <span className="text-sm font-medium">美食地圖</span>
+            <span className="text-xs ml-1" style={{ color: "#C49A6C" }}>台灣餐廳、早午餐、小吃</span>
+          </Link>
+          <Link
+            href="/shopping"
+            onClick={() => setFoodOpen(false)}
+            className="flex items-center gap-3 px-6 py-4 transition-colors"
+            style={{ color: "#6B4423" }}
+          >
+            <ShoppingBagIcon size={16} style={{ color: "#A63F24" }} />
+            <span className="text-sm font-medium">購物地圖</span>
+            <span className="text-xs ml-1" style={{ color: "#C49A6C" }}>亞洲超市、採買指南</span>
+          </Link>
+        </div>
+      )}
 
     </header>
   );
