@@ -13,17 +13,16 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { MapIcon, ShoppingBagIcon } from "lucide-react";
+import { MapIcon, ShoppingBagIcon, Menu, X } from "lucide-react";
 
-// 動態 import icon JSON
-import guideIcon    from "../public/icons/guide.json";
-import homeIcon     from "../public/icons/home.json";
-import pencilIcon   from "../public/icons/pencil.json";
-import foodIcon     from "../public/icons/food.json";
-import funIcon      from "../public/icons/fun.json";
-import jobIcon      from "../public/icons/job.json";
+import guideIcon     from "../public/icons/guide.json";
+import homeIcon      from "../public/icons/home.json";
+import pencilIcon    from "../public/icons/pencil.json";
+import foodIcon      from "../public/icons/food.json";
+import funIcon       from "../public/icons/fun.json";
+import jobIcon       from "../public/icons/job.json";
 import recommendIcon from "../public/icons/recommend.json";
-import calendarIcon from "../public/icons/calendar.json";
+import calendarIcon  from "../public/icons/calendar.json";
 
 const navLinksBefore = [
   { href: "/life",        label: "新生活指南", icon: guideIcon },
@@ -36,6 +35,18 @@ const navLinksAfter = [
   { href: "/jobs",      label: "工作與求職", icon: jobIcon },
   { href: "/directory", label: "名片與推薦", icon: recommendIcon },
   { href: "/events",    label: "活動日曆",   icon: calendarIcon },
+];
+
+const allLinks = [
+  { href: "/life",        label: "新生活指南", icon: guideIcon },
+  { href: "/guides/rent", label: "居住與租屋", icon: homeIcon },
+  { href: "/education",   label: "學校與教育", icon: pencilIcon },
+  { href: "/restaurants", label: "美食地圖",   icon: foodIcon },
+  { href: "/shopping",    label: "購物地圖",   icon: foodIcon },
+  { href: "/explore",     label: "社群與玩樂", icon: funIcon },
+  { href: "/jobs",        label: "工作與求職", icon: jobIcon },
+  { href: "/directory",   label: "名片與推薦", icon: recommendIcon },
+  { href: "/events",      label: "活動日曆",   icon: calendarIcon },
 ];
 
 const foodShoppingLinks = [
@@ -69,28 +80,15 @@ function NavTab({
   return (
     <Link
       href={href}
-      className="flex flex-row items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm border-b-2 transition-all duration-150 whitespace-nowrap"
+      className="flex flex-row items-center gap-2 px-4 py-3 border-b-2 transition-all duration-150 whitespace-nowrap text-sm font-medium"
       style={{
         borderBottomColor: isActive ? "#A63F24" : "transparent",
         color: isActive ? "#A63F24" : "#6B4423",
-        minWidth: "64px",
       }}
       onMouseEnter={() => playerRef.current?.playFromBeginning()}
-      onMouseLeave={(e) => {
-        if (!isActive) {
-          (e.currentTarget as HTMLElement).style.color = "#6B4423";
-          (e.currentTarget as HTMLElement).style.backgroundColor = "transparent";
-        }
-      }}
     >
-      <span className="hidden sm:block">
-        <Player
-          ref={playerRef}
-          icon={icon as any}
-          size={24}
-        />
-      </span>
-      <span className="text-xs font-medium">{label}</span>
+      <Player ref={playerRef} icon={icon as any} size={24} />
+      <span>{label}</span>
     </Link>
   );
 }
@@ -98,6 +96,7 @@ function NavTab({
 export default function Navbar() {
   const pathname = usePathname();
   const [query, setQuery] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
   const foodPlayerRef = useRef<Player>(null);
 
   const isFoodActive =
@@ -125,7 +124,7 @@ export default function Navbar() {
               Guide
             </span>
             <span className="font-semibold tracking-widest uppercase sm:hidden"
-              style={{ color: "#C49A6C", fontSize: "10px", lineHeight: "1.3", letterSpacing: "0.15em" }}>
+              style={{ color: "#C49A6C", fontSize: "10px", letterSpacing: "0.15em" }}>
               TAIWAN GUIDE
             </span>
           </Link>
@@ -142,7 +141,7 @@ export default function Navbar() {
             </svg>
             <input
               type="text"
-              placeholder="搜尋餐廳、學校、資訊⋯"
+              placeholder="搜尋⋯"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="bg-transparent text-sm outline-none w-full"
@@ -150,14 +149,23 @@ export default function Navbar() {
             />
           </div>
 
+          {/* 漢堡按鈕 — 只在手機顯示 */}
+          <button
+            className="sm:hidden shrink-0 p-2 rounded-lg transition-colors"
+            style={{ color: "#E8A818" }}
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label="選單"
+          >
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+
         </div>
       </div>
 
-      {/* 第二層：分類 Tab */}
-      <div style={{ backgroundColor: "#F9F2E8", borderBottom: "2px solid #C49A6C" }}>
+      {/* 第二層：桌面版橫向 Tab — 手機隱藏 */}
+      <div className="hidden sm:block" style={{ backgroundColor: "#F9F2E8", borderBottom: "2px solid #C49A6C" }}>
         <div className="w-full px-6 flex items-center overflow-x-auto scrollbar-none">
 
-          {/* 前三個 Tab */}
           {navLinksBefore.map((link) => (
             <NavTab
               key={link.href}
@@ -168,12 +176,12 @@ export default function Navbar() {
             />
           ))}
 
-          {/* 美食與購物：下拉選單（第四個位置）*/}
+          {/* 美食與購物下拉 */}
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
                 <NavigationMenuTrigger
-                  className="flex flex-row items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm border-b-2 bg-transparent rounded-none h-auto transition-all duration-150"
+                  className="flex flex-row items-center gap-2 px-4 py-3 border-b-2 bg-transparent rounded-none h-auto text-sm font-medium transition-all duration-150"
                   style={{
                     borderBottomColor: isFoodActive ? "#A63F24" : "transparent",
                     color: isFoodActive ? "#A63F24" : "#6B4423",
@@ -181,14 +189,8 @@ export default function Navbar() {
                   }}
                   onMouseEnter={() => foodPlayerRef.current?.playFromBeginning()}
                 >
-                  <span className="hidden sm:block">
-                    <Player
-                      ref={foodPlayerRef}
-                      icon={foodIcon as any}
-                      size={24}
-                    />
-                  </span>
-                  <span className="text-xs font-medium whitespace-nowrap">美食與購物</span>
+                  <Player ref={foodPlayerRef} icon={foodIcon as any} size={24} />
+                  <span>美食與購物</span>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="w-56 p-2">
@@ -222,7 +224,6 @@ export default function Navbar() {
             </NavigationMenuList>
           </NavigationMenu>
 
-          {/* 後四個 Tab */}
           {navLinksAfter.map((link) => (
             <NavTab
               key={link.href}
@@ -235,6 +236,37 @@ export default function Navbar() {
 
         </div>
       </div>
+
+      {/* 手機版漢堡選單 */}
+      {menuOpen && (
+        <div
+          className="sm:hidden absolute w-full z-50 shadow-lg"
+          style={{ backgroundColor: "#F9F2E8", borderBottom: "2px solid #C49A6C" }}
+        >
+          {allLinks.map((link) => {
+            const isActive = pathname.startsWith(link.href);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center gap-3 px-6 py-4 border-b transition-colors"
+                style={{
+                  borderColor: "#e8d8c4",
+                  backgroundColor: isActive ? "#f0e4d0" : "transparent",
+                  color: isActive ? "#A63F24" : "#6B4423",
+                }}
+              >
+                <Player icon={link.icon as any} size={24} />
+                <span className="text-sm font-medium">{link.label}</span>
+                {isActive && (
+                  <span className="ml-auto text-xs" style={{ color: "#A63F24" }}>●</span>
+                )}
+              </Link>
+            );
+          })}
+        </div>
+      )}
 
     </header>
   );
