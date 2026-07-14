@@ -13,7 +13,18 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { MapIcon, ShoppingBagIcon, Menu, X } from "lucide-react";
+import {
+  BookOpen,
+  Home,
+  GraduationCap,
+  UtensilsCrossed,
+  PartyPopper,
+  Briefcase,
+  ContactRound,
+  CalendarDays,
+  MapIcon,
+  ShoppingBagIcon,
+} from "lucide-react";
 
 import guideIcon     from "../public/icons/guide.json";
 import homeIcon      from "../public/icons/home.json";
@@ -25,70 +36,60 @@ import recommendIcon from "../public/icons/recommend.json";
 import calendarIcon  from "../public/icons/calendar.json";
 
 const navLinksBefore = [
-  { href: "/life",        label: "新生活指南", icon: guideIcon },
-  { href: "/guides/rent", label: "居住與租屋", icon: homeIcon },
-  { href: "/education",   label: "學校與教育", icon: pencilIcon },
+  { href: "/life",        label: "新生活指南", lordicon: guideIcon,     lucide: BookOpen },
+  { href: "/guides/rent", label: "居住與租屋", lordicon: homeIcon,      lucide: Home },
+  { href: "/education",   label: "學校與教育", lordicon: pencilIcon,    lucide: GraduationCap },
 ];
 
 const navLinksAfter = [
-  { href: "/explore",   label: "社群與玩樂", icon: funIcon },
-  { href: "/jobs",      label: "工作與求職", icon: jobIcon },
-  { href: "/directory", label: "名片與推薦", icon: recommendIcon },
-  { href: "/events",    label: "活動日曆",   icon: calendarIcon },
-];
-
-const allLinks = [
-  { href: "/life",        label: "新生活指南", icon: guideIcon },
-  { href: "/guides/rent", label: "居住與租屋", icon: homeIcon },
-  { href: "/education",   label: "學校與教育", icon: pencilIcon },
-  { href: "/restaurants", label: "美食地圖",   icon: foodIcon },
-  { href: "/shopping",    label: "購物地圖",   icon: foodIcon },
-  { href: "/explore",     label: "社群與玩樂", icon: funIcon },
-  { href: "/jobs",        label: "工作與求職", icon: jobIcon },
-  { href: "/directory",   label: "名片與推薦", icon: recommendIcon },
-  { href: "/events",      label: "活動日曆",   icon: calendarIcon },
+  { href: "/explore",   label: "社群與玩樂", lordicon: funIcon,       lucide: PartyPopper },
+  { href: "/jobs",      label: "工作與求職", lordicon: jobIcon,       lucide: Briefcase },
+  { href: "/directory", label: "名片與推薦", lordicon: recommendIcon, lucide: ContactRound },
+  { href: "/events",    label: "活動日曆",   lordicon: calendarIcon,  lucide: CalendarDays },
 ];
 
 const foodShoppingLinks = [
-  {
-    href: "/restaurants",
-    icon: <MapIcon className="w-4 h-4" />,
-    title: "美食地圖",
-    description: "台灣餐廳、早午餐、小吃推薦",
-  },
-  {
-    href: "/shopping",
-    icon: <ShoppingBagIcon className="w-4 h-4" />,
-    title: "購物地圖",
-    description: "亞洲超市、台灣商品採買指南",
-  },
+  { href: "/restaurants", icon: <MapIcon className="w-4 h-4" />,         title: "美食地圖", description: "台灣餐廳、早午餐、小吃推薦" },
+  { href: "/shopping",    icon: <ShoppingBagIcon className="w-4 h-4" />, title: "購物地圖", description: "亞洲超市、台灣商品採買指南" },
 ];
 
-function NavTab({
-  href,
-  label,
-  icon,
-  isActive,
-}: {
-  href: string;
-  label: string;
-  icon: object;
-  isActive: boolean;
+// 桌面版 tab — Lordicon 動畫
+function DesktopTab({ href, label, lordicon, isActive }: {
+  href: string; label: string; lordicon: object; isActive: boolean;
 }) {
   const playerRef = useRef<Player>(null);
-
   return (
     <Link
       href={href}
-      className="flex flex-row items-center gap-2 px-4 py-3 border-b-2 transition-all duration-150 whitespace-nowrap text-sm font-medium"
+      className="flex items-center gap-2 px-4 py-3 border-b-2 transition-all duration-150 whitespace-nowrap text-sm font-medium"
       style={{
         borderBottomColor: isActive ? "#A63F24" : "transparent",
         color: isActive ? "#A63F24" : "#6B4423",
       }}
       onMouseEnter={() => playerRef.current?.playFromBeginning()}
     >
-      <Player ref={playerRef} icon={icon as any} size={24} />
+      <Player ref={playerRef} icon={lordicon as any} size={24} />
       <span>{label}</span>
+    </Link>
+  );
+}
+
+// 手機版 tab — lucide 靜態 icon
+function MobileTab({ href, label, Icon, isActive }: {
+  href: string; label: string; Icon: React.ElementType; isActive: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      className="flex flex-col items-center gap-0.5 px-2 py-2 border-b-2 transition-all duration-150 whitespace-nowrap"
+      style={{
+        borderBottomColor: isActive ? "#A63F24" : "transparent",
+        color: isActive ? "#A63F24" : "#6B4423",
+        minWidth: "52px",
+      }}
+    >
+      <Icon size={16} strokeWidth={1.8} />
+      <span style={{ fontSize: "9px", fontWeight: 500 }}>{label}</span>
     </Link>
   );
 }
@@ -96,16 +97,13 @@ function NavTab({
 export default function Navbar() {
   const pathname = usePathname();
   const [query, setQuery] = useState("");
-  const [menuOpen, setMenuOpen] = useState(false);
   const foodPlayerRef = useRef<Player>(null);
-
-  const isFoodActive =
-    pathname.startsWith("/restaurants") || pathname.startsWith("/shopping");
+  const isFoodActive = pathname.startsWith("/restaurants") || pathname.startsWith("/shopping");
 
   return (
     <header className="sticky top-0 z-50">
 
-      {/* 第一層：深棕 Header */}
+      {/* Header */}
       <div style={{ backgroundColor: "#6B4423" }}>
         <div className="w-full px-4 sm:px-6 h-14 sm:h-20 flex items-center justify-between gap-3">
 
@@ -141,7 +139,7 @@ export default function Navbar() {
             </svg>
             <input
               type="text"
-              placeholder="搜尋⋯"
+              placeholder={`搜尋餐廳、學校、資訊⋯`}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="bg-transparent text-sm outline-none w-full"
@@ -149,39 +147,22 @@ export default function Navbar() {
             />
           </div>
 
-          {/* 漢堡按鈕 — 只在手機顯示 */}
-          <button
-            className="sm:hidden shrink-0 p-2 rounded-lg transition-colors"
-            style={{ color: "#E8A818" }}
-            onClick={() => setMenuOpen((v) => !v)}
-            aria-label="選單"
-          >
-            {menuOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
-
         </div>
       </div>
 
-      {/* 第二層：桌面版橫向 Tab — 手機隱藏 */}
+      {/* 桌面版 Tab — hidden on mobile */}
       <div className="hidden sm:block" style={{ backgroundColor: "#F9F2E8", borderBottom: "2px solid #C49A6C" }}>
         <div className="w-full px-6 flex items-center overflow-x-auto scrollbar-none">
-
           {navLinksBefore.map((link) => (
-            <NavTab
-              key={link.href}
-              href={link.href}
-              label={link.label}
-              icon={link.icon}
-              isActive={pathname.startsWith(link.href)}
-            />
+            <DesktopTab key={link.href} href={link.href} label={link.label}
+              lordicon={link.lordicon} isActive={pathname.startsWith(link.href)} />
           ))}
 
-          {/* 美食與購物下拉 */}
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
                 <NavigationMenuTrigger
-                  className="flex flex-row items-center gap-2 px-4 py-3 border-b-2 bg-transparent rounded-none h-auto text-sm font-medium transition-all duration-150"
+                  className="flex items-center gap-2 px-4 py-3 border-b-2 bg-transparent rounded-none h-auto text-sm font-medium"
                   style={{
                     borderBottomColor: isFoodActive ? "#A63F24" : "transparent",
                     color: isFoodActive ? "#A63F24" : "#6B4423",
@@ -196,26 +177,15 @@ export default function Navbar() {
                   <ul className="w-56 p-2">
                     {foodShoppingLinks.map((item) => (
                       <li key={item.href}>
-                        <NavigationMenuLink
-                          render={
-                            <Link
-                              href={item.href}
-                              className="flex items-start gap-3 p-3 rounded-lg transition-colors hover:bg-amber-50"
-                            >
-                              <span className="mt-0.5 shrink-0" style={{ color: "#A63F24" }}>
-                                {item.icon}
-                              </span>
-                              <div>
-                                <div className="text-sm font-semibold mb-0.5" style={{ color: "#6B4423" }}>
-                                  {item.title}
-                                </div>
-                                <div className="text-xs leading-relaxed" style={{ color: "#C49A6C" }}>
-                                  {item.description}
-                                </div>
-                              </div>
-                            </Link>
-                          }
-                        />
+                        <NavigationMenuLink render={
+                          <Link href={item.href} className="flex items-start gap-3 p-3 rounded-lg hover:bg-amber-50">
+                            <span className="mt-0.5 shrink-0" style={{ color: "#A63F24" }}>{item.icon}</span>
+                            <div>
+                              <div className="text-sm font-semibold mb-0.5" style={{ color: "#6B4423" }}>{item.title}</div>
+                              <div className="text-xs" style={{ color: "#C49A6C" }}>{item.description}</div>
+                            </div>
+                          </Link>
+                        } />
                       </li>
                     ))}
                   </ul>
@@ -225,48 +195,30 @@ export default function Navbar() {
           </NavigationMenu>
 
           {navLinksAfter.map((link) => (
-            <NavTab
-              key={link.href}
-              href={link.href}
-              label={link.label}
-              icon={link.icon}
-              isActive={pathname.startsWith(link.href)}
-            />
+            <DesktopTab key={link.href} href={link.href} label={link.label}
+              lordicon={link.lordicon} isActive={pathname.startsWith(link.href)} />
           ))}
-
         </div>
       </div>
 
-      {/* 手機版漢堡選單 */}
-      {menuOpen && (
-        <div
-          className="sm:hidden absolute w-full z-50 shadow-lg"
-          style={{ backgroundColor: "#F9F2E8", borderBottom: "2px solid #C49A6C" }}
-        >
-          {allLinks.map((link) => {
-            const isActive = pathname.startsWith(link.href);
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className="flex items-center gap-3 px-6 py-4 border-b transition-colors"
-                style={{
-                  borderColor: "#e8d8c4",
-                  backgroundColor: isActive ? "#f0e4d0" : "transparent",
-                  color: isActive ? "#A63F24" : "#6B4423",
-                }}
-              >
-                <Player icon={link.icon as any} size={24} />
-                <span className="text-sm font-medium">{link.label}</span>
-                {isActive && (
-                  <span className="ml-auto text-xs" style={{ color: "#A63F24" }}>●</span>
-                )}
-              </Link>
-            );
-          })}
+      {/* 手機版 Tab — hidden on desktop */}
+      <div className="sm:hidden overflow-x-auto scrollbar-none" style={{ backgroundColor: "#F9F2E8", borderBottom: "2px solid #C49A6C" }}>
+        <div className="flex items-center px-2">
+          {navLinksBefore.map((link) => (
+            <MobileTab key={link.href} href={link.href} label={link.label}
+              Icon={link.lucide} isActive={pathname.startsWith(link.href)} />
+          ))}
+
+          {/* 美食與購物手機版 — 直接連到美食地圖 */}
+          <MobileTab href="/restaurants" label="美食購物"
+            Icon={UtensilsCrossed} isActive={isFoodActive} />
+
+          {navLinksAfter.map((link) => (
+            <MobileTab key={link.href} href={link.href} label={link.label}
+              Icon={link.lucide} isActive={pathname.startsWith(link.href)} />
+          ))}
         </div>
-      )}
+      </div>
 
     </header>
   );
