@@ -81,15 +81,15 @@ function MobileTab({ href, label, Icon, isActive }: {
   return (
     <Link
       href={href}
-      className="flex items-center gap-1.5 px-3 py-2.5 border-b-2 transition-all duration-150 whitespace-nowrap"
+      className="flex items-center gap-1.5 px-4 py-3 border-b-2 transition-all duration-150 whitespace-nowrap"
       style={{
         borderBottomColor: isActive ? "#A63F24" : "transparent",
         color: isActive ? "#A63F24" : "#6B4423",
-        fontSize: "13px",
+        fontSize: "14px",
         fontWeight: 500,
       }}
     >
-      <Icon size={15} strokeWidth={1.8} />
+      <Icon size={17} strokeWidth={1.8} />
       <span>{label}</span>
     </Link>
   );
@@ -98,6 +98,7 @@ function MobileTab({ href, label, Icon, isActive }: {
 export default function Navbar() {
   const pathname = usePathname();
   const [query, setQuery] = useState("");
+  const [foodOpen, setFoodOpen] = useState(false);
   const foodPlayerRef = useRef<Player>(null);
   const isFoodActive = pathname.startsWith("/restaurants") || pathname.startsWith("/shopping");
 
@@ -106,12 +107,12 @@ export default function Navbar() {
 
       {/* Header */}
       <div style={{ backgroundColor: "#6B4423" }}>
-        <div className="w-full px-4 sm:px-6 h-14 sm:h-20 flex items-center justify-between gap-3">
+        <div className="w-full px-4 sm:px-6 h-20 sm:h-24 flex items-center justify-between gap-3">
 
           {/* Logo */}
           <Link href="/" className="shrink-0 flex flex-col items-start leading-none">
             <span className="font-black tracking-widest uppercase"
-              style={{ color: "#E8A818", fontSize: "clamp(14px, 4vw, 20px)", lineHeight: "1.1" }}>
+              style={{ color: "#E8A818", fontSize: "clamp(20px, 5vw, 24px)", lineHeight: "1.1" }}>
               DFW
             </span>
             <span className="font-semibold tracking-widest uppercase hidden sm:block"
@@ -123,14 +124,14 @@ export default function Navbar() {
               Guide
             </span>
             <span className="font-semibold tracking-widest uppercase sm:hidden"
-              style={{ color: "#C49A6C", fontSize: "10px", letterSpacing: "0.15em" }}>
+              style={{ color: "#C49A6C", fontSize: "13px", letterSpacing: "0.15em" }}>
               TAIWAN GUIDE
             </span>
           </Link>
 
           {/* 搜尋列 */}
           <div
-            className="flex items-center gap-2 rounded-xl px-3 py-1.5 sm:py-2 w-full max-w-xs sm:max-w-sm"
+            className="flex items-center gap-2 rounded-xl px-3 py-2.5 sm:py-2 w-full max-w-xs sm:max-w-sm"
             style={{ backgroundColor: "#4e2e10", border: "1px solid #8B5A2B" }}
           >
             <svg className="w-4 h-4 shrink-0" style={{ color: "#C49A6C" }}
@@ -210,9 +211,55 @@ export default function Navbar() {
               Icon={link.lucide} isActive={pathname.startsWith(link.href)} />
           ))}
 
-          {/* 美食與購物手機版 */}
-          <MobileTab href="/restaurants" label="美食與購物"
-            Icon={UtensilsCrossed} isActive={isFoodActive} />
+          {/* 美食與購物手機版 — 展開子選單 */}
+          <div className="relative">
+            <button
+              onClick={() => setFoodOpen((v) => !v)}
+              className="flex items-center gap-1.5 px-4 py-3 border-b-2 transition-all duration-150 whitespace-nowrap"
+              style={{
+                borderBottomColor: isFoodActive ? "#A63F24" : foodOpen ? "#C49A6C" : "transparent",
+                color: isFoodActive ? "#A63F24" : "#6B4423",
+                fontSize: "14px",
+                fontWeight: 500,
+                background: "none",
+              }}
+            >
+              <UtensilsCrossed size={17} strokeWidth={1.8} />
+              <span>美食與購物</span>
+              <span style={{ fontSize: "10px", marginLeft: "2px" }}>{foodOpen ? "▲" : "▼"}</span>
+            </button>
+
+            {/* 展開子選單 */}
+            {foodOpen && (
+              <div
+                className="absolute top-full left-0 z-50 shadow-lg rounded-b-xl overflow-hidden"
+                style={{ backgroundColor: "white", border: "1px solid #e8d8c4", minWidth: "140px" }}
+              >
+                <Link
+                  href="/restaurants"
+                  onClick={() => setFoodOpen(false)}
+                  className="flex items-center gap-2 px-4 py-3 transition-colors"
+                  style={{ color: "#6B4423", fontSize: "13px", borderBottom: "1px solid #f0e4d0" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#fdf0e0")}
+                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
+                >
+                  <MapIcon size={14} style={{ color: "#A63F24" }} />
+                  <span>美食地圖</span>
+                </Link>
+                <Link
+                  href="/shopping"
+                  onClick={() => setFoodOpen(false)}
+                  className="flex items-center gap-2 px-4 py-3 transition-colors"
+                  style={{ color: "#6B4423", fontSize: "13px" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#fdf0e0")}
+                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
+                >
+                  <ShoppingBagIcon size={14} style={{ color: "#A63F24" }} />
+                  <span>購物地圖</span>
+                </Link>
+              </div>
+            )}
+          </div>
 
           {navLinksAfter.map((link) => (
             <MobileTab key={link.href} href={link.href} label={link.label}
