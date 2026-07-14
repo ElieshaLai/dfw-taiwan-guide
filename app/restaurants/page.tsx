@@ -18,6 +18,7 @@ type Restaurant = {
   id: number;
   name: string;
   category: string;
+  subcategory: string;
   city: string;
   address: string;
   phone: string;
@@ -30,18 +31,17 @@ export default function RestaurantsPage() {
   const [categories, setCategories] = useState<string[]>([]);
   const [cities, setCities] = useState<string[]>([]);
   const [selectedCats, setSelectedCats] = useState<string[]>([]);
+  const [selectedSubs, setSelectedSubs] = useState<string[]>([]);
   const [selectedCities, setSelectedCities] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
     async function fetchData() {
-      // 抓 enum 分類
       const { data: enumData } = await supabase
         .rpc("get_enum_values", { enum_name: "restaurant_category" });
       if (enumData) setCategories(enumData);
 
-      // 抓餐廳資料
       const { data, error } = await supabase
         .from("restaurants")
         .select("*")
@@ -52,7 +52,6 @@ export default function RestaurantsPage() {
         setError(error.message);
       } else {
         setRestaurants(data || []);
-        // 從資料動態抓不重複的城市
         const uniqueCities = [...new Set((data || []).map((r) => r.city).filter(Boolean))].sort();
         setCities(uniqueCities);
       }
@@ -61,9 +60,31 @@ export default function RestaurantsPage() {
     fetchData();
   }, []);
 
+  // 當前主分類底下有哪些子分類
+  const availableSubs = selectedCats.length > 0
+    ? [...new Set(
+        restaurants
+          .filter((r) => selectedCats.includes(r.category) && r.subcategory)
+          .map((r) => r.subcategory)
+      )].sort()
+    : [];
+
   function toggleCat(cat: string) {
-    setSelectedCats((prev) =>
-      prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]
+    setSelectedCats((prev) => {
+      const next = prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat];
+      // 子分類只保留仍然有效的
+      setSelectedSubs((subs) =>
+        subs.filter((sub) =>
+          restaurants.some((r) => next.includes(r.category) && r.subcategory === sub)
+        )
+      );
+      return next;
+    });
+  }
+
+  function toggleSub(sub: string) {
+    setSelectedSubs((prev) =>
+      prev.includes(sub) ? prev.filter((s) => s !== sub) : [...prev, sub]
     );
   }
 
@@ -73,23 +94,20 @@ export default function RestaurantsPage() {
     );
   }
 
-  function removeTag(type: "cat" | "city", value: string) {
-    if (type === "cat") setSelectedCats((prev) => prev.filter((c) => c !== value));
-    else setSelectedCities((prev) => prev.filter((c) => c !== value));
-  }
-
   function clearAll() {
     setSelectedCats([]);
+    setSelectedSubs([]);
     setSelectedCities([]);
   }
 
   const filtered = restaurants.filter((r) => {
     const catMatch = selectedCats.length === 0 || selectedCats.includes(r.category);
+    const subMatch = selectedSubs.length === 0 || selectedSubs.includes(r.subcategory);
     const cityMatch = selectedCities.length === 0 || selectedCities.includes(r.city);
-    return catMatch && cityMatch;
+    return catMatch && subMatch && cityMatch;
   });
 
-  const hasFilter = selectedCats.length > 0 || selectedCities.length > 0;
+  const hasFilter = selectedCats.length > 0 || selectedSubs.length > 0 || selectedCities.length > 0;
 
   return (
     <>
@@ -117,7 +135,7 @@ export default function RestaurantsPage() {
             🗺️ 美食地圖
           </h1>
 
-          {/* 類型 Filter */}
+          {/* 主分類 filter — 單選 */}
           {categories.length > 0 && (
             <div className="mb-3">
               <p className="text-xs font-medium mb-2" style={{ color: "#C49A6C" }}>類型</p>
@@ -143,7 +161,32 @@ export default function RestaurantsPage() {
             </div>
           )}
 
-          {/* 城市 Filter */}
+          {/* 子分類 filter — 選了主分類才出現 */}
+          {availableSubs.length > 0 && (
+            <div className="mb-3 pl-3 border-l-2" style={{ borderColor: "#C49A6C" }}>
+<div className="flex flex-wrap gap-2">
+                {availableSubs.map((sub) => {
+                  const isActive = selectedSubs.includes(sub);
+                  return (
+                    <button
+                      key={sub}
+                      onClick={() => toggleSub(sub)}
+                      className="text-sm px-4 py-1.5 rounded-full border transition-all duration-150 font-medium"
+                      style={{
+                        backgroundColor: isActive ? "#A63F24" : "#FBF5EE",
+                        borderColor: isActive ? "#A63F24" : "#C49A6C",
+                        color: isActive ? "white" : "#A63F24",
+                      }}
+                    >
+                      {sub}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* 城市 filter */}
           {cities.length > 0 && (
             <div className="mb-4">
               <p className="text-xs font-medium mb-2" style={{ color: "#C49A6C" }}>城市</p>
@@ -156,9 +199,9 @@ export default function RestaurantsPage() {
                       onClick={() => toggleCity(city)}
                       className="text-sm px-4 py-1.5 rounded-full border transition-all duration-150 font-medium"
                       style={{
-                        backgroundColor: isActive ? "#A63F24" : "white",
-                        borderColor: isActive ? "#A63F24" : "#e8d8c4",
-                        color: isActive ? "white" : "#6B4423",
+                        backgroundColor: isActive ? "#E8A818" : "white",
+                        borderColor: isActive ? "#E8A818" : "#e8d8c4",
+                        color: isActive ? "#3a1e08" : "#6B4423",
                       }}
                     >
                       {city}
@@ -171,7 +214,7 @@ export default function RestaurantsPage() {
 
           {/* 已選取標籤 */}
           {hasFilter && (
-            <div className="flex flex-wrap items-center gap-2 mb-6 pt-2 border-t" style={{ borderColor: "#e8d8c4" }}>
+            <div className="flex flex-wrap items-center gap-2 mb-6 pt-3 border-t" style={{ borderColor: "#e8d8c4" }}>
               <span className="text-xs" style={{ color: "#C49A6C" }}>已篩選：</span>
               {selectedCats.map((cat) => (
                 <span
@@ -180,17 +223,27 @@ export default function RestaurantsPage() {
                   style={{ backgroundColor: "#6B4423", color: "white" }}
                 >
                   {cat}
-                  <button onClick={() => removeTag("cat", cat)} className="ml-1 hover:opacity-70">✕</button>
+                  <button onClick={() => toggleCat(cat)} className="ml-1 hover:opacity-70">✕</button>
+                </span>
+              ))}
+              {selectedSubs.map((sub) => (
+                <span
+                  key={sub}
+                  className="inline-flex items-center gap-1 text-xs px-3 py-1 rounded-full font-medium"
+                  style={{ backgroundColor: "#A63F24", color: "white" }}
+                >
+                  {sub}
+                  <button onClick={() => toggleSub(sub)} className="ml-1 hover:opacity-70">✕</button>
                 </span>
               ))}
               {selectedCities.map((city) => (
                 <span
                   key={city}
                   className="inline-flex items-center gap-1 text-xs px-3 py-1 rounded-full font-medium"
-                  style={{ backgroundColor: "#A63F24", color: "white" }}
+                  style={{ backgroundColor: "#E8A818", color: "#3a1e08" }}
                 >
                   {city}
-                  <button onClick={() => removeTag("city", city)} className="ml-1 hover:opacity-70">✕</button>
+                  <button onClick={() => toggleCity(city)} className="ml-1 hover:opacity-70">✕</button>
                 </span>
               ))}
               <button
@@ -210,7 +263,6 @@ export default function RestaurantsPage() {
             </p>
           )}
 
-          {/* 狀態 */}
           {loading && <p style={{ color: "#C49A6C" }}>載入中⋯</p>}
           {error && <p style={{ color: "#A63F24" }}>載入失敗：{error}</p>}
           {!loading && filtered.length === 0 && (
@@ -237,12 +289,22 @@ export default function RestaurantsPage() {
                   <h2 className="font-bold text-lg" style={{ color: "#6B4423" }}>
                     {r.name}
                   </h2>
-                  <span
-                    className="text-xs px-2 py-0.5 rounded-full shrink-0 ml-2"
-                    style={{ backgroundColor: "#F9F2E8", color: "#A63F24", border: "1px solid #e8d8c4" }}
-                  >
-                    {r.category}
-                  </span>
+                  <div className="flex gap-1 shrink-0 ml-2 flex-wrap justify-end">
+                    <span
+                      className="text-xs px-2 py-0.5 rounded-full"
+                      style={{ backgroundColor: "#F9F2E8", color: "#A63F24", border: "1px solid #e8d8c4" }}
+                    >
+                      {r.category}
+                    </span>
+                    {r.subcategory && (
+                      <span
+                        className="text-xs px-2 py-0.5 rounded-full"
+                        style={{ backgroundColor: "#fff0e0", color: "#A63F24", border: "1px solid #e8d8c4" }}
+                      >
+                        {r.subcategory}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <p className="text-xs mb-2" style={{ color: "#C49A6C" }}>
                   {r.city}
