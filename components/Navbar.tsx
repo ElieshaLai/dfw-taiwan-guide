@@ -14,6 +14,8 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import {
+  MapIcon,
+  ShoppingBagIcon,
   BookOpen,
   Home,
   GraduationCap,
@@ -22,8 +24,6 @@ import {
   Briefcase,
   ContactRound,
   CalendarDays,
-  MapIcon,
-  ShoppingBagIcon,
 } from "lucide-react";
 
 import guideIcon     from "../public/icons/guide.json";
@@ -36,16 +36,16 @@ import recommendIcon from "../public/icons/recommend.json";
 import calendarIcon  from "../public/icons/calendar.json";
 
 const navLinksBefore = [
-  { href: "/life",        label: "新生活指南", lordicon: guideIcon,     lucide: BookOpen },
-  { href: "/guides/rent", label: "居住與租屋", lordicon: homeIcon,      lucide: Home },
-  { href: "/education",   label: "學校與教育", lordicon: pencilIcon,    lucide: GraduationCap },
+  { href: "/life",        label: "新生活指南", lucide: BookOpen,      lordicon: guideIcon },
+  { href: "/guides/rent", label: "居住與租屋", lucide: Home,          lordicon: homeIcon },
+  { href: "/education",   label: "學校與教育", lucide: GraduationCap, lordicon: pencilIcon },
 ];
 
 const navLinksAfter = [
-  { href: "/explore",   label: "社群與玩樂", lordicon: funIcon,       lucide: PartyPopper },
-  { href: "/jobs",      label: "工作與求職", lordicon: jobIcon,       lucide: Briefcase },
-  { href: "/directory", label: "名片與推薦", lordicon: recommendIcon, lucide: ContactRound },
-  { href: "/events",    label: "活動日曆",   lordicon: calendarIcon,  lucide: CalendarDays },
+  { href: "/explore",   label: "社群與玩樂", lucide: PartyPopper,  lordicon: funIcon },
+  { href: "/jobs",      label: "工作與求職", lucide: Briefcase,    lordicon: jobIcon },
+  { href: "/directory", label: "名片與推薦", lucide: ContactRound, lordicon: recommendIcon },
+  { href: "/events",    label: "活動日曆",   lucide: CalendarDays, lordicon: calendarIcon },
 ];
 
 const foodShoppingLinks = [
@@ -53,7 +53,7 @@ const foodShoppingLinks = [
   { href: "/shopping",    icon: <ShoppingBagIcon className="w-4 h-4" />, title: "購物地圖", description: "亞洲超市、台灣商品採買指南" },
 ];
 
-// 桌面版 tab — Lordicon 動畫
+// 桌面版 — Lordicon 動畫
 function DesktopTab({ href, label, lordicon, isActive }: {
   href: string; label: string; lordicon: object; isActive: boolean;
 }) {
@@ -74,22 +74,23 @@ function DesktopTab({ href, label, lordicon, isActive }: {
   );
 }
 
-// 手機版 tab — lucide 靜態 icon
+// 手機版 — lucide 靜態 icon
 function MobileTab({ href, label, Icon, isActive }: {
   href: string; label: string; Icon: React.ElementType; isActive: boolean;
 }) {
   return (
     <Link
       href={href}
-      className="flex flex-col items-center gap-0.5 px-2 py-2 border-b-2 transition-all duration-150 whitespace-nowrap"
+      className="flex items-center gap-1.5 px-3 py-2.5 border-b-2 transition-all duration-150 whitespace-nowrap"
       style={{
         borderBottomColor: isActive ? "#A63F24" : "transparent",
         color: isActive ? "#A63F24" : "#6B4423",
-        minWidth: "52px",
+        fontSize: "13px",
+        fontWeight: 500,
       }}
     >
-      <Icon size={16} strokeWidth={1.8} />
-      <span style={{ fontSize: "9px", fontWeight: 500 }}>{label}</span>
+      <Icon size={15} strokeWidth={1.8} />
+      <span>{label}</span>
     </Link>
   );
 }
@@ -139,7 +140,7 @@ export default function Navbar() {
             </svg>
             <input
               type="text"
-              placeholder={`搜尋餐廳、學校、資訊⋯`}
+              placeholder="搜尋餐廳、學校、資訊⋯"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="bg-transparent text-sm outline-none w-full"
@@ -150,7 +151,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* 桌面版 Tab — hidden on mobile */}
+      {/* 桌面版 Tab */}
       <div className="hidden sm:block" style={{ backgroundColor: "#F9F2E8", borderBottom: "2px solid #C49A6C" }}>
         <div className="w-full px-6 flex items-center overflow-x-auto scrollbar-none">
           {navLinksBefore.map((link) => (
@@ -201,16 +202,16 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* 手機版 Tab — hidden on desktop */}
-      <div className="sm:hidden overflow-x-auto scrollbar-none" style={{ backgroundColor: "#F9F2E8", borderBottom: "2px solid #C49A6C" }}>
-        <div className="flex items-center px-2">
+      {/* 手機版 Tab — emoji + 文字，左右滑動 */}
+      <div className="sm:hidden" style={{ backgroundColor: "#F9F2E8", borderBottom: "2px solid #C49A6C" }}>
+        <div className="flex overflow-x-auto scrollbar-none">
           {navLinksBefore.map((link) => (
             <MobileTab key={link.href} href={link.href} label={link.label}
               Icon={link.lucide} isActive={pathname.startsWith(link.href)} />
           ))}
 
-          {/* 美食與購物手機版 — 直接連到美食地圖 */}
-          <MobileTab href="/restaurants" label="美食購物"
+          {/* 美食與購物手機版 */}
+          <MobileTab href="/restaurants" label="美食與購物"
             Icon={UtensilsCrossed} isActive={isFoodActive} />
 
           {navLinksAfter.map((link) => (
