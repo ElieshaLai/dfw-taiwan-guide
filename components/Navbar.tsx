@@ -69,7 +69,7 @@ function NavTab({
   return (
     <Link
       href={href}
-      className="flex flex-row items-center gap-2 px-4 py-3 border-b-2 transition-all duration-150 whitespace-nowrap"
+      className="flex flex-row items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm border-b-2 transition-all duration-150 whitespace-nowrap"
       style={{
         borderBottomColor: isActive ? "#A63F24" : "transparent",
         color: isActive ? "#A63F24" : "#6B4423",
@@ -83,11 +83,13 @@ function NavTab({
         }
       }}
     >
-      <Player
-        ref={playerRef}
-        icon={icon as any}
-        size={28}
-      />
+      <span className="hidden sm:block">
+        <Player
+          ref={playerRef}
+          icon={icon as any}
+          size={24}
+        />
+      </span>
       <span className="text-xs font-medium">{label}</span>
     </Link>
   );
@@ -106,27 +108,31 @@ export default function Navbar() {
 
       {/* 第一層：深棕 Header */}
       <div style={{ backgroundColor: "#6B4423" }}>
-        <div className="w-full px-6 h-20 flex items-center justify-between gap-4">
+        <div className="w-full px-4 sm:px-6 h-14 sm:h-20 flex items-center justify-between gap-3">
 
           {/* Logo */}
           <Link href="/" className="shrink-0 flex flex-col items-start leading-none">
             <span className="font-black tracking-widest uppercase"
-              style={{ color: "#E8A818", fontSize: "20px", lineHeight: "1.1" }}>
+              style={{ color: "#E8A818", fontSize: "clamp(14px, 4vw, 20px)", lineHeight: "1.1" }}>
               DFW
             </span>
-            <span className="font-semibold tracking-widest uppercase"
+            <span className="font-semibold tracking-widest uppercase hidden sm:block"
               style={{ color: "#C49A6C", fontSize: "18px", lineHeight: "1.3", letterSpacing: "0.2em" }}>
               Taiwan
             </span>
-            <span className="font-semibold tracking-widest uppercase"
+            <span className="font-semibold tracking-widest uppercase hidden sm:block"
               style={{ color: "#C49A6C", fontSize: "18px", lineHeight: "1.3", letterSpacing: "0.2em" }}>
               Guide
+            </span>
+            <span className="font-semibold tracking-widest uppercase sm:hidden"
+              style={{ color: "#C49A6C", fontSize: "10px", lineHeight: "1.3", letterSpacing: "0.15em" }}>
+              TAIWAN GUIDE
             </span>
           </Link>
 
           {/* 搜尋列 */}
           <div
-            className="flex items-center gap-2 rounded-xl px-4 py-2 w-full max-w-sm"
+            className="flex items-center gap-2 rounded-xl px-3 py-1.5 sm:py-2 w-full max-w-xs sm:max-w-sm"
             style={{ backgroundColor: "#4e2e10", border: "1px solid #8B5A2B" }}
           >
             <svg className="w-4 h-4 shrink-0" style={{ color: "#C49A6C" }}
@@ -167,7 +173,7 @@ export default function Navbar() {
             <NavigationMenuList>
               <NavigationMenuItem>
                 <NavigationMenuTrigger
-                  className="flex flex-row items-center gap-2 px-4 py-3 border-b-2 bg-transparent rounded-none h-auto transition-all duration-150"
+                  className="flex flex-row items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm border-b-2 bg-transparent rounded-none h-auto transition-all duration-150"
                   style={{
                     borderBottomColor: isFoodActive ? "#A63F24" : "transparent",
                     color: isFoodActive ? "#A63F24" : "#6B4423",
@@ -175,11 +181,13 @@ export default function Navbar() {
                   }}
                   onMouseEnter={() => foodPlayerRef.current?.playFromBeginning()}
                 >
-                  <Player
-                    ref={foodPlayerRef}
-                    icon={foodIcon as any}
-                    size={28}
-                  />
+                  <span className="hidden sm:block">
+                    <Player
+                      ref={foodPlayerRef}
+                      icon={foodIcon as any}
+                      size={24}
+                    />
+                  </span>
                   <span className="text-xs font-medium whitespace-nowrap">美食與購物</span>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
