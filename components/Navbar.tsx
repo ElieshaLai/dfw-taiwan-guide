@@ -14,13 +14,17 @@ import {
 } from "@/components/ui/navigation-menu";
 import { MapIcon, ShoppingBagIcon } from "lucide-react";
 
-const navLinks = [
+const navLinksBefore = [
+  { href: "/life",        label: "📘 新生活指南" },
   { href: "/guides/rent", label: "🏠 居住與租屋" },
   { href: "/education",   label: "🏫 學校與教育" },
-  { href: "/life",        label: "📘 新生活指南" },
+];
+
+const navLinksAfter = [
+  { href: "/explore",     label: "🎉 社群與玩樂" },
+  { href: "/jobs",        label: "💼 工作與求職" },
   { href: "/directory",   label: "📇 名片與推薦" },
   { href: "/events",      label: "📅 活動日曆" },
-  { href: "/explore",     label: "🎉 社群與玩樂" },
 ];
 
 const foodShoppingLinks = [
@@ -95,8 +99,8 @@ export default function Navbar() {
       <div style={{ backgroundColor: "#F9F2E8", borderBottom: "2px solid #C49A6C" }}>
         <div className="w-full px-6 flex items-center gap-1 overflow-x-auto scrollbar-none">
 
-          {/* 一般 Tab */}
-          {navLinks.map((link) => {
+          {/* 前三個 Tab */}
+          {navLinksBefore.map((link) => {
             const isActive = pathname.startsWith(link.href);
             return (
               <Link
@@ -125,7 +129,7 @@ export default function Navbar() {
             );
           })}
 
-          {/* 美食與購物：下拉選單 */}
+          {/* 美食與購物：下拉選單（第四個位置）*/}
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
@@ -170,6 +174,36 @@ export default function Navbar() {
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
+
+          {/* 後四個 Tab */}
+          {navLinksAfter.map((link) => {
+            const isActive = pathname.startsWith(link.href);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="whitespace-nowrap px-5 py-3 text-sm font-medium border-b-2 transition-all duration-150"
+                style={{
+                  borderBottomColor: isActive ? "#A63F24" : "transparent",
+                  color: isActive ? "#A63F24" : "#6B4423",
+                }}
+                onMouseEnter={(e) => {
+                  if (!isActive) {
+                    (e.currentTarget as HTMLElement).style.color = "#A63F24";
+                    (e.currentTarget as HTMLElement).style.backgroundColor = "#f0e4d0";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive) {
+                    (e.currentTarget as HTMLElement).style.color = "#6B4423";
+                    (e.currentTarget as HTMLElement).style.backgroundColor = "transparent";
+                  }
+                }}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
 
         </div>
       </div>
