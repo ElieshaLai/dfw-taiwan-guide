@@ -3,7 +3,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { Player } from "@lordicon/react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -14,17 +15,27 @@ import {
 } from "@/components/ui/navigation-menu";
 import { MapIcon, ShoppingBagIcon } from "lucide-react";
 
+// 動態 import icon JSON
+import guideIcon    from "../public/icons/guide.json";
+import homeIcon     from "../public/icons/home.json";
+import pencilIcon   from "../public/icons/pencil.json";
+import foodIcon     from "../public/icons/food.json";
+import funIcon      from "../public/icons/fun.json";
+import jobIcon      from "../public/icons/job.json";
+import recommendIcon from "../public/icons/recommend.json";
+import calendarIcon from "../public/icons/calendar.json";
+
 const navLinksBefore = [
-  { href: "/life",        label: "📘 新生活指南" },
-  { href: "/guides/rent", label: "🏠 居住與租屋" },
-  { href: "/education",   label: "🏫 學校與教育" },
+  { href: "/life",        label: "新生活指南", icon: guideIcon },
+  { href: "/guides/rent", label: "居住與租屋", icon: homeIcon },
+  { href: "/education",   label: "學校與教育", icon: pencilIcon },
 ];
 
 const navLinksAfter = [
-  { href: "/explore",     label: "🎉 社群與玩樂" },
-  { href: "/jobs",        label: "💼 工作與求職" },
-  { href: "/directory",   label: "📇 名片與推薦" },
-  { href: "/events",      label: "📅 活動日曆" },
+  { href: "/explore",   label: "社群與玩樂", icon: funIcon },
+  { href: "/jobs",      label: "工作與求職", icon: jobIcon },
+  { href: "/directory", label: "名片與推薦", icon: recommendIcon },
+  { href: "/events",    label: "活動日曆",   icon: calendarIcon },
 ];
 
 const foodShoppingLinks = [
@@ -42,9 +53,50 @@ const foodShoppingLinks = [
   },
 ];
 
+function NavTab({
+  href,
+  label,
+  icon,
+  isActive,
+}: {
+  href: string;
+  label: string;
+  icon: object;
+  isActive: boolean;
+}) {
+  const playerRef = useRef<Player>(null);
+
+  return (
+    <Link
+      href={href}
+      className="flex flex-row items-center gap-2 px-4 py-3 border-b-2 transition-all duration-150 whitespace-nowrap"
+      style={{
+        borderBottomColor: isActive ? "#A63F24" : "transparent",
+        color: isActive ? "#A63F24" : "#6B4423",
+        minWidth: "64px",
+      }}
+      onMouseEnter={() => playerRef.current?.playFromBeginning()}
+      onMouseLeave={(e) => {
+        if (!isActive) {
+          (e.currentTarget as HTMLElement).style.color = "#6B4423";
+          (e.currentTarget as HTMLElement).style.backgroundColor = "transparent";
+        }
+      }}
+    >
+      <Player
+        ref={playerRef}
+        icon={icon as any}
+        size={28}
+      />
+      <span className="text-xs font-medium">{label}</span>
+    </Link>
+  );
+}
+
 export default function Navbar() {
   const pathname = usePathname();
   const [query, setQuery] = useState("");
+  const foodPlayerRef = useRef<Player>(null);
 
   const isFoodActive =
     pathname.startsWith("/restaurants") || pathname.startsWith("/shopping");
@@ -97,51 +149,38 @@ export default function Navbar() {
 
       {/* 第二層：分類 Tab */}
       <div style={{ backgroundColor: "#F9F2E8", borderBottom: "2px solid #C49A6C" }}>
-        <div className="w-full px-6 flex items-center gap-1 overflow-x-auto scrollbar-none">
+        <div className="w-full px-6 flex items-center overflow-x-auto scrollbar-none">
 
           {/* 前三個 Tab */}
-          {navLinksBefore.map((link) => {
-            const isActive = pathname.startsWith(link.href);
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="whitespace-nowrap px-5 py-3 text-sm font-medium border-b-2 transition-all duration-150"
-                style={{
-                  borderBottomColor: isActive ? "#A63F24" : "transparent",
-                  color: isActive ? "#A63F24" : "#6B4423",
-                }}
-                onMouseEnter={(e) => {
-                  if (!isActive) {
-                    (e.currentTarget as HTMLElement).style.color = "#A63F24";
-                    (e.currentTarget as HTMLElement).style.backgroundColor = "#f0e4d0";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!isActive) {
-                    (e.currentTarget as HTMLElement).style.color = "#6B4423";
-                    (e.currentTarget as HTMLElement).style.backgroundColor = "transparent";
-                  }
-                }}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
+          {navLinksBefore.map((link) => (
+            <NavTab
+              key={link.href}
+              href={link.href}
+              label={link.label}
+              icon={link.icon}
+              isActive={pathname.startsWith(link.href)}
+            />
+          ))}
 
           {/* 美食與購物：下拉選單（第四個位置）*/}
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
                 <NavigationMenuTrigger
-                  className="whitespace-nowrap px-5 py-3 text-sm font-medium border-b-2 bg-transparent rounded-none h-auto transition-all duration-150"
+                  className="flex flex-row items-center gap-2 px-4 py-3 border-b-2 bg-transparent rounded-none h-auto transition-all duration-150"
                   style={{
                     borderBottomColor: isFoodActive ? "#A63F24" : "transparent",
                     color: isFoodActive ? "#A63F24" : "#6B4423",
                     backgroundColor: "transparent",
                   }}
+                  onMouseEnter={() => foodPlayerRef.current?.playFromBeginning()}
                 >
-                  🍜 美食與購物
+                  <Player
+                    ref={foodPlayerRef}
+                    icon={foodIcon as any}
+                    size={28}
+                  />
+                  <span className="text-xs font-medium whitespace-nowrap">美食與購物</span>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="w-56 p-2">
@@ -151,7 +190,7 @@ export default function Navbar() {
                           render={
                             <Link
                               href={item.href}
-                              className="flex items-start gap-3 p-3 rounded-lg transition-colors hover:bg-amber-50 group"
+                              className="flex items-start gap-3 p-3 rounded-lg transition-colors hover:bg-amber-50"
                             >
                               <span className="mt-0.5 shrink-0" style={{ color: "#A63F24" }}>
                                 {item.icon}
@@ -176,34 +215,15 @@ export default function Navbar() {
           </NavigationMenu>
 
           {/* 後四個 Tab */}
-          {navLinksAfter.map((link) => {
-            const isActive = pathname.startsWith(link.href);
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="whitespace-nowrap px-5 py-3 text-sm font-medium border-b-2 transition-all duration-150"
-                style={{
-                  borderBottomColor: isActive ? "#A63F24" : "transparent",
-                  color: isActive ? "#A63F24" : "#6B4423",
-                }}
-                onMouseEnter={(e) => {
-                  if (!isActive) {
-                    (e.currentTarget as HTMLElement).style.color = "#A63F24";
-                    (e.currentTarget as HTMLElement).style.backgroundColor = "#f0e4d0";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!isActive) {
-                    (e.currentTarget as HTMLElement).style.color = "#6B4423";
-                    (e.currentTarget as HTMLElement).style.backgroundColor = "transparent";
-                  }
-                }}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
+          {navLinksAfter.map((link) => (
+            <NavTab
+              key={link.href}
+              href={link.href}
+              label={link.label}
+              icon={link.icon}
+              isActive={pathname.startsWith(link.href)}
+            />
+          ))}
 
         </div>
       </div>
