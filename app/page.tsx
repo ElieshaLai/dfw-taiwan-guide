@@ -4,6 +4,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Navbar from "../components/Navbar";
 
 function getGreeting(): string {
@@ -30,6 +31,11 @@ const latestNews = [
 
 export default function Home() {
   const [greeting, setGreeting] = useState("");
+  const { scrollY } = useScroll();
+
+  const titleY       = useTransform(scrollY, [0, 300], [0, -80]);
+  const titleOpacity = useTransform(scrollY, [0, 200], [1, 0]);
+  const titleScale   = useTransform(scrollY, [0, 300], [1, 0.9]);
 
   useEffect(() => {
     setGreeting(getGreeting());
@@ -37,54 +43,99 @@ export default function Home() {
 
   return (
     <>
-      <Navbar />
+      <Navbar isHomePage={true} />
 
       <main>
-        {/* Hero — 左文右圖 */}
-        <section
-          className="flex flex-col md:flex-row items-center"
-          style={{ minHeight: "88vh", backgroundColor: "#6B4423", padding: "48px 40px" }}
-        >
-          {/* 左側：文字區 */}
-          <div className="flex flex-col justify-center md:w-1/2 md:pr-12 pb-10 md:pb-0">
-            <h1
-              className="font-black leading-none mb-4"
-              style={{
-                fontSize: "clamp(52px, 8vw, 88px)",
-                color: "#E8C9A0",
-                textShadow: "0 2px 24px rgba(0,0,0,0.3)",
-              }}
-            >
-              {greeting}
-            </h1>
+        {/* Hero — 全螢幕 */}
+        <section className="relative" style={{ height: "100vh" }}>
 
-            <p className="mb-8 leading-relaxed max-w-sm"
-              style={{ color: "rgba(255,255,255,0.6)", fontSize: "15px" }}>
-              給台灣人的 Dallas–Fort Worth 生活指南。<br />
-              從租屋、學區到美食與生活資訊，協助你快速適應德州生活。
+          {/* 背景圖 */}
+          <div className="absolute inset-0">
+            <Image
+              src="/hero.jpg"
+              alt="DFW Taiwan Guide"
+              fill
+              style={{ objectFit: "cover", objectPosition: "center" }}
+              priority
+            />
+            <div className="absolute inset-0"
+              style={{ background: "linear-gradient(to bottom, rgba(40,15,5,0.25) 0%, rgba(40,15,5,0.7) 100%)" }}
+            />
+          </div>
+
+          {/* 大標題 — 左上，scroll 時淡出 */}
+          <motion.div
+            style={{ y: titleY, opacity: titleOpacity, scale: titleScale }}
+            className="absolute top-10 left-0 right-0 pointer-events-none z-10 px-8 sm:px-16"
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="flex flex-col items-start"
+            >
+              <span
+                className="font-black tracking-widest uppercase leading-none"
+                style={{
+                  fontSize: "clamp(48px, 10vw, 110px)",
+                  color: "#E8C9A0",
+                  textShadow: "0 4px 40px rgba(0,0,0,0.4)",
+                }}
+              >
+                DFW
+              </span>
+              <span
+                className="font-bold tracking-widest uppercase"
+                style={{
+                  fontSize: "clamp(36px, 7.5vw, 82px)",
+                  color: "#C49A6C",
+                  letterSpacing: "0.12em",
+                  textShadow: "0 2px 20px rgba(0,0,0,0.4)",
+                  lineHeight: 1.1,
+                }}
+              >
+                TAIWAN GUIDE
+              </span>
+            </motion.div>
+          </motion.div>
+
+          {/* 問候 + 從哪裡開始 + 關鍵字 — 置中下方 */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="absolute bottom-16 left-0 right-0 flex flex-col items-center gap-4 px-6 z-10 text-center"
+          >
+            <p className="font-black" style={{
+              fontSize: "clamp(36px, 8vw, 64px)",
+              color: "#E8C9A0",
+              textShadow: "0 2px 32px rgba(0,0,0,0.5)"
+            }}>
+              {greeting}
             </p>
 
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-sm font-medium tracking-widest"
-                style={{ color: "#E8C9A0" }}>
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium tracking-widest" style={{ color: "#E8C9A0" }}>
                 從哪裡開始？
               </span>
-              <svg width="18" height="18" viewBox="0 0 24 24"
-                fill="none" stroke="#E8C9A0" strokeWidth="2.5"
-                strokeLinecap="round" strokeLinejoin="round"
-                style={{ animation: "bounce-x 1.8s infinite" }}>
+              <motion.svg
+                animate={{ x: [0, 5, 0] }}
+                transition={{ repeat: Infinity, duration: 1.5 }}
+                width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="#E8C9A0" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+              >
                 <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
+              </motion.svg>
             </div>
 
-            <div className="flex flex-wrap gap-2 max-w-sm">
+            <div className="flex flex-wrap gap-2 justify-center max-w-lg">
               {keywords.map((k) => (
                 <Link
                   key={k.href}
                   href={k.href}
                   className="text-xs font-medium px-4 py-2 rounded-full transition-all duration-150"
                   style={{
-                    backgroundColor: "rgba(255,255,255,0.08)",
+                    backgroundColor: "rgba(255,255,255,0.1)",
                     border: "1px solid rgba(196,154,108,0.4)",
                     color: "#C49A6C",
                   }}
@@ -94,7 +145,7 @@ export default function Home() {
                     (e.currentTarget as HTMLElement).style.color = "#E8A818";
                   }}
                   onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(255,255,255,0.08)";
+                    (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(255,255,255,0.1)";
                     (e.currentTarget as HTMLElement).style.borderColor = "rgba(196,154,108,0.4)";
                     (e.currentTarget as HTMLElement).style.color = "#C49A6C";
                   }}
@@ -103,27 +154,7 @@ export default function Home() {
                 </Link>
               ))}
             </div>
-          </div>
-
-          {/* 右側：圖片 */}
-          <div
-            className="md:w-1/2 w-full"
-            style={{
-              borderRadius: "16px",
-              overflow: "hidden",
-              boxShadow: "0 24px 64px rgba(0,0,0,0.45)",
-              border: "1px solid rgba(196,154,108,0.25)",
-            }}
-          >
-            <Image
-              src="/hero.jpg"
-              alt="台北101夜景"
-              width={900}
-              height={600}
-              style={{ width: "100%", height: "auto", display: "block" }}
-              priority
-            />
-          </div>
+          </motion.div>
         </section>
 
         {/* 最新消息 */}
@@ -175,13 +206,6 @@ export default function Home() {
           </p>
         </div>
       </main>
-
-      <style>{`
-        @keyframes bounce-x {
-          0%, 100% { transform: translateX(0); }
-          50%       { transform: translateX(5px); }
-        }
-      `}</style>
     </>
   );
 }

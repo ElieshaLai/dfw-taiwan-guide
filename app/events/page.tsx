@@ -108,7 +108,7 @@ export default function EventsPage() {
   return (
     <>
       <Navbar />
-      <main style={{ backgroundColor: "#FBF5EE", minHeight: "100vh" }}>
+      <main style={{ backgroundColor: "#FBF5EE", minHeight: "100vh", paddingTop: "140px" }}>
         <div className="max-w-5xl mx-auto px-6 py-10">
 
           {/* 麵包屑 */}
