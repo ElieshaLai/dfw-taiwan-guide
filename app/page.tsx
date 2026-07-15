@@ -40,7 +40,7 @@ export default function Home() {
       <Navbar />
 
       <main>
-        {/* Hero */}
+        {/* Hero — 左文右圖 */}
         <section
           className="flex flex-col md:flex-row items-center"
           style={{ minHeight: "88vh", backgroundColor: "#6B4423", padding: "48px 40px" }}
@@ -58,33 +58,25 @@ export default function Home() {
               {greeting}
             </h1>
 
-            <p
-              className="mb-8 leading-relaxed max-w-sm"
-              style={{ color: "rgba(255,255,255,0.6)", fontSize: "15px" }}
-            >
+            <p className="mb-8 leading-relaxed max-w-sm"
+              style={{ color: "rgba(255,255,255,0.6)", fontSize: "15px" }}>
               給台灣人的 Dallas–Fort Worth 生活指南。<br />
               從租屋、學區到美食與生活資訊，協助你快速適應德州生活。
             </p>
 
-            {/* 從哪裡開始 + 箭頭 */}
             <div className="flex items-center gap-2 mb-4">
-              <span
-                className="text-sm font-medium tracking-widest"
-                style={{ color: "#E8C9A0" }}
-              >
+              <span className="text-sm font-medium tracking-widest"
+                style={{ color: "#E8C9A0" }}>
                 從哪裡開始？
               </span>
-              <svg
-                width="18" height="18" viewBox="0 0 24 24"
+              <svg width="18" height="18" viewBox="0 0 24 24"
                 fill="none" stroke="#E8C9A0" strokeWidth="2.5"
                 strokeLinecap="round" strokeLinejoin="round"
-                style={{ animation: "bounce-x 1.8s infinite" }}
-              >
+                style={{ animation: "bounce-x 1.8s infinite" }}>
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </div>
 
-            {/* 關鍵字按鈕 */}
             <div className="flex flex-wrap gap-2 max-w-sm">
               {keywords.map((k) => (
                 <Link
@@ -113,7 +105,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* 右側：圖片，有圓角與陰影，完整顯示 */}
+          {/* 右側：圖片 */}
           <div
             className="md:w-1/2 w-full"
             style={{
@@ -128,19 +120,14 @@ export default function Home() {
               alt="台北101夜景"
               width={900}
               height={600}
-              style={{
-                width: "100%",
-                height: "auto",
-                display: "block",
-              }}
+              style={{ width: "100%", height: "auto", display: "block" }}
               priority
             />
           </div>
         </section>
 
-        {/* 最新消息區塊 */}
-        <section
-          id="latest"
+        {/* 最新消息 */}
+        <section id="latest"
           style={{ backgroundColor: "#FBF5EE", borderTop: "3px solid #C49A6C" }}
           className="px-6 py-16"
         >
@@ -157,12 +144,9 @@ export default function Home() {
                 查看全部 →
               </Link>
             </div>
-
             <div className="flex flex-col gap-4">
               {latestNews.map((news, i) => (
-                <Link
-                  key={i}
-                  href={news.href}
+                <Link key={i} href={news.href}
                   className="flex items-center gap-4 p-4 rounded-xl transition-all duration-150 group"
                   style={{ backgroundColor: "white", border: "1px solid #e8d8c4" }}
                   onMouseEnter={(e) => {
@@ -174,30 +158,22 @@ export default function Home() {
                     (e.currentTarget as HTMLElement).style.backgroundColor = "white";
                   }}
                 >
-                  <span className="text-xs font-mono shrink-0" style={{ color: "#C49A6C" }}>
-                    {news.date}
-                  </span>
-                  <span className="text-sm font-medium" style={{ color: "#6B4423" }}>
-                    {news.title}
-                  </span>
+                  <span className="text-xs font-mono shrink-0" style={{ color: "#C49A6C" }}>{news.date}</span>
+                  <span className="text-sm font-medium" style={{ color: "#6B4423" }}>{news.title}</span>
                   <span className="ml-auto text-xs transition-transform group-hover:translate-x-1"
-                    style={{ color: "#C49A6C" }}>
-                    →
-                  </span>
+                    style={{ color: "#C49A6C" }}>→</span>
                 </Link>
               ))}
             </div>
           </div>
         </section>
 
-        {/* 頁面底部 */}
         <div style={{ backgroundColor: "#FBF5EE" }} className="px-6 pb-12">
           <p className="text-center text-xs max-w-5xl mx-auto"
             style={{ color: "#C49A6C", opacity: 0.5 }}>
             DFW Taiwan Guide · 持續更新中
           </p>
         </div>
-
       </main>
 
       <style>{`
