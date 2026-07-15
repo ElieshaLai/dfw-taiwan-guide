@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import Navbar from "../../components/Navbar";
 import { supabase } from "../../lib/supabase";
 import {
@@ -131,8 +132,9 @@ export default function RestaurantsPage() {
             </BreadcrumbList>
           </Breadcrumb>
 
-          <h1 className="font-bold mb-6" style={{ color: "#6B4423", fontSize: "24px" }}>
-            🗺️ 美食地圖
+          <h1 className="flex items-center gap-3 font-bold mb-6" style={{ color: "#6B4423", fontSize: "24px" }}>
+            <Image src="/food-map-icon.png" alt="美食地圖" width={32} height={32} />
+            美食地圖
           </h1>
 
           {/* 主分類 filter — 單選 */}
@@ -307,7 +309,10 @@ export default function RestaurantsPage() {
                   </div>
                 </div>
                 <p className="text-xs mb-2" style={{ color: "#C49A6C" }}>
-                  {r.city}
+                  <span className="inline-flex items-center gap-1">
+                    <Image src="/location-pin.png" alt="location" width={12} height={12} />
+                    {r.city}
+                  </span>
                 </p>
                 {r.description && (
                   <p className="text-sm mb-3" style={{ color: "#888" }}>{r.description}</p>
