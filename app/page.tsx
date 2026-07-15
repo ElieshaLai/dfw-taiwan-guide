@@ -144,8 +144,9 @@ export default function Home() {
                 <Link
                   key={k.href}
                   href={k.href}
-                  className="text-xs font-medium px-4 py-2 rounded-full transition-all duration-150"
+                  className="font-medium px-5 py-2.5 rounded-full transition-all duration-150"
                   style={{
+                    fontSize: "clamp(13px, 2vw, 16px)",
                     backgroundColor: "rgba(255,255,255,0.1)",
                     border: "1px solid rgba(196,154,108,0.4)",
                     color: "#C49A6C",
