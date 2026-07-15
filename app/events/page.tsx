@@ -203,7 +203,7 @@ export default function EventsPage() {
                   key={d}
                   className="py-4 text-center text-sm font-semibold"
                   style={{
-                    color: i === 0 || i === 6 ? "#426219" : "#C49A6C",
+                    color: i === 0 || i === 6 ? "#659429" : "#C49A6C",
                     borderBottom: "1px solid #f0e4d0",
                   }}
                 >
@@ -255,7 +255,7 @@ export default function EventsPage() {
                     <div
                       className="text-sm font-medium mb-1.5 w-8 h-8 flex items-center justify-center rounded-full"
                       style={{
-                        color: isToday(day) ? "white" : isWeekend ? "#426219" : "#6B4423",
+                        color: isToday(day) ? "white" : isWeekend ? "#659429" : "#6B4423",
                         backgroundColor: isToday(day) ? "#A63F24" : "transparent",
                         fontWeight: isToday(day) ? 700 : 500,
                       }}
