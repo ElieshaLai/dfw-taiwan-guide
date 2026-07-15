@@ -236,6 +236,13 @@ export default function Navbar() {
           {/* 美食與購物手機版 */}
           <button
             onClick={() => setFoodOpen((v) => !v)}
+            ref={(el) => {
+              if (el && isFoodActive) {
+                setTimeout(() => {
+                  el.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+                }, 100);
+              }
+            }}
             className="flex items-center gap-1.5 px-4 py-3 border-b-2 transition-all duration-150 whitespace-nowrap"
             style={{
               borderBottomColor: isFoodActive ? "#A63F24" : foodOpen ? "#C49A6C" : "transparent",
