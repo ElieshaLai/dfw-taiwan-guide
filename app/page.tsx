@@ -146,9 +146,10 @@ export default function Home() {
         >
           <div className="max-w-5xl mx-auto">
             <div className="flex items-center justify-between mb-8">
-              <h2 className="font-bold tracking-wide"
+              <h2 className="flex items-center gap-2 font-bold tracking-wide"
                 style={{ color: "#6B4423", fontSize: "20px" }}>
-                📣 最新消息
+                <Image src="/speaker-icon.png" alt="最新消息" width={24} height={24} />
+                最新消息
               </h2>
               <Link href="/news"
                 className="text-xs font-medium transition-opacity hover:opacity-70"

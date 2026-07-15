@@ -107,13 +107,13 @@ export default function Navbar() {
   useEffect(() => {
     const el = mobileNavRef.current;
     if (!el) return;
-    const active = el.querySelector('[data-active="true"]') as HTMLElement;
-    if (active) {
-      const elLeft = active.offsetLeft;
-      const elWidth = active.offsetWidth;
-      const containerWidth = el.offsetWidth;
-      el.scrollLeft = elLeft - containerWidth / 2 + elWidth / 2;
-    }
+    // 短暫延遲確保 DOM 更新後再 scroll
+    setTimeout(() => {
+      const active = el.querySelector('[data-active="true"]') as HTMLElement;
+      if (active) {
+        active.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      }
+    }, 50);
   }, [pathname]);
   const isFoodActive = pathname.startsWith("/restaurants") || pathname.startsWith("/shopping");
 
