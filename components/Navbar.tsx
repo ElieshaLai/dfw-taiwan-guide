@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Player } from "@lordicon/react";
 import {
   NavigationMenu,
@@ -81,6 +81,7 @@ function MobileTab({ href, label, Icon, isActive }: {
   return (
     <Link
       href={href}
+      data-active={isActive ? "true" : "false"}
       className="flex items-center gap-1.5 px-4 py-3 border-b-2 transition-all duration-150 whitespace-nowrap"
       style={{
         borderBottomColor: isActive ? "#A63F24" : "transparent",
@@ -100,6 +101,20 @@ export default function Navbar() {
   const [query, setQuery] = useState("");
   const [foodOpen, setFoodOpen] = useState(false);
   const foodPlayerRef = useRef<Player>(null);
+  const mobileNavRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll active tab into view on mobile
+  useEffect(() => {
+    const el = mobileNavRef.current;
+    if (!el) return;
+    const active = el.querySelector('[data-active="true"]') as HTMLElement;
+    if (active) {
+      const elLeft = active.offsetLeft;
+      const elWidth = active.offsetWidth;
+      const containerWidth = el.offsetWidth;
+      el.scrollLeft = elLeft - containerWidth / 2 + elWidth / 2;
+    }
+  }, [pathname]);
   const isFoodActive = pathname.startsWith("/restaurants") || pathname.startsWith("/shopping");
 
   return (
