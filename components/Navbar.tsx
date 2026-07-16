@@ -139,38 +139,42 @@ export default function Navbar({ isHomePage = false }: { isHomePage?: boolean })
       {/* Header */}
       <div className="w-full px-4 sm:px-6 h-20 sm:h-24 flex items-center justify-between gap-3">
 
-        {/* Logo */}
-        <Link
-          href="/"
-          className="shrink-0 flex flex-col items-start leading-none transition-opacity duration-300"
-          style={{ opacity: scrolled ? 1 : 0, pointerEvents: scrolled ? "auto" : "none" }}
-        >
-          <span className="font-black tracking-widest uppercase"
-            style={{ color: "#E8A818", fontSize: "clamp(20px, 5vw, 24px)", lineHeight: "1.1" }}>
+        {/* Logo — 未 scroll 時大，scroll 後縮小 */}
+        <Link href="/" className="shrink-0 flex flex-col items-start leading-none">
+          <span className="font-black tracking-widest uppercase transition-all duration-300"
+            style={{
+              color: "#E8A818",
+              fontSize: scrolled ? "clamp(20px, 4vw, 24px)" : "clamp(32px, 6vw, 48px)",
+              lineHeight: "1.1"
+            }}>
             DFW
           </span>
-          <span className="font-semibold tracking-widest uppercase hidden sm:block"
-            style={{ color: "#C49A6C", fontSize: "18px", lineHeight: "1.3", letterSpacing: "0.2em" }}>
-            Taiwan
+          <span className="font-semibold tracking-widest uppercase hidden sm:block transition-all duration-300"
+            style={{
+              color: "#C49A6C",
+              fontSize: scrolled ? "16px" : "clamp(14px, 3vw, 26px)",
+              lineHeight: "1.2",
+              letterSpacing: "0.2em"
+            }}>
+            Taiwan Guide
           </span>
-          <span className="font-semibold tracking-widest uppercase hidden sm:block"
-            style={{ color: "#C49A6C", fontSize: "18px", lineHeight: "1.3", letterSpacing: "0.2em" }}>
-            Guide
-          </span>
-          <span className="font-semibold tracking-widest uppercase sm:hidden"
-            style={{ color: "#C49A6C", fontSize: "13px", letterSpacing: "0.15em" }}>
-            TAIWAN GUIDE
+          <span className="font-semibold tracking-widest uppercase sm:hidden transition-all duration-300"
+            style={{
+              color: "#C49A6C",
+              fontSize: scrolled ? "11px" : "16px",
+              letterSpacing: "0.15em"
+            }}>
+            Taiwan Guide
           </span>
         </Link>
 
         {/* 搜尋列 */}
         <div
-          className="flex items-center gap-2 rounded-xl px-3 py-2 w-full max-w-xs sm:max-w-sm transition-opacity duration-300"
+          className="flex items-center gap-2 rounded-xl px-3 py-2 w-full max-w-xs sm:max-w-sm transition-all duration-300"
           style={{
-            backgroundColor: "#4e2e10",
-            border: "1px solid #8B5A2B",
-            opacity: scrolled ? 1 : 0,
-            pointerEvents: scrolled ? "auto" : "none",
+            backgroundColor: scrolled ? "#4e2e10" : "rgba(255,255,255,0.15)",
+            border: scrolled ? "1px solid #8B5A2B" : "1px solid rgba(255,255,255,0.3)",
+            opacity: scrolled ? 1 : 0.8,
           }}
         >
           <svg className="w-4 h-4 shrink-0" style={{ color: "#C49A6C" }}

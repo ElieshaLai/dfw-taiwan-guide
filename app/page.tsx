@@ -3,8 +3,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState, useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 
 function getGreeting(): string {
@@ -31,20 +31,8 @@ const latestNews = [
 
 export default function Home() {
   const [greeting, setGreeting] = useState("");
-  const { scrollY } = useScroll();
 
   useEffect(() => { setGreeting(getGreeting()); }, []);
-
-  // 大標題動畫：scroll 0→300
-  // 平滑縮小並移動到左上角 navbar logo 位置
-  const titleScale   = useTransform(scrollY, [0, 320], [1, 0.18]);
-  const titleX       = useTransform(scrollY, [0, 320], [0, 0]);
-  const titleY       = useTransform(scrollY, [0, 320], [0, -420]);
-  const titleOpacity = useTransform(scrollY, [280, 320], [1, 0]);
-
-  // 問候 + 關鍵字淡出
-  const bottomOpacity = useTransform(scrollY, [0, 180], [1, 0]);
-  const bottomY       = useTransform(scrollY, [0, 180], [0, 30]);
 
   return (
     <>
@@ -68,64 +56,29 @@ export default function Home() {
             />
           </div>
 
-          {/* 大標題 DFW TAIWAN GUIDE — 左上角，scroll 後縮小移向 navbar */}
-          <motion.div
-            style={{ scale: titleScale, x: titleX, y: titleY, opacity: titleOpacity }}
-            className="absolute left-8 sm:left-16 top-8 sm:top-10 pointer-events-none z-10 origin-top-left"
-          >
-            <div className="flex flex-col items-start leading-none">
-              <span
-                className="font-black tracking-widest uppercase"
-                style={{
-                  fontSize: "clamp(52px, 10vw, 110px)",
-                  color: "#E8A818",
-                  textShadow: "0 4px 40px rgba(0,0,0,0.3)",
-                  lineHeight: 1.05,
-                }}
-              >
-                DFW
-              </span>
-              <span
-                className="font-bold tracking-widest uppercase"
-                style={{
-                  fontSize: "clamp(20px, 4vw, 46px)",
-                  color: "#C49A6C",
-                  letterSpacing: "0.18em",
-                  textShadow: "0 2px 20px rgba(0,0,0,0.3)",
-                  lineHeight: 1.2,
-                }}
-              >
-                TAIWAN
-              </span>
-              <span
-                className="font-bold tracking-widest uppercase"
-                style={{
-                  fontSize: "clamp(20px, 4vw, 46px)",
-                  color: "#C49A6C",
-                  letterSpacing: "0.18em",
-                  textShadow: "0 2px 20px rgba(0,0,0,0.3)",
-                  lineHeight: 1.2,
-                }}
-              >
-                GUIDE
-              </span>
-            </div>
-          </motion.div>
+          {/* 問候 + 從哪裡開始 + 關鍵字 — 置中 */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-5 px-6 z-10 text-center">
 
-          {/* 問候 + 從哪裡開始 + 關鍵字 — 置中下方，scroll 時淡出 */}
-          <motion.div
-            style={{ opacity: bottomOpacity, y: bottomY }}
-            className="absolute inset-0 flex flex-col items-center justify-center gap-4 px-6 z-10 text-center"
-          >
-            <p className="font-black" style={{
-              fontSize: "clamp(64px, 14vw, 120px)",
-              color: "#E8C9A0",
-              textShadow: "0 2px 32px rgba(0,0,0,0.5)"
-            }}>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="font-black"
+              style={{
+                fontSize: "clamp(64px, 14vw, 120px)",
+                color: "#E8C9A0",
+                textShadow: "0 2px 32px rgba(0,0,0,0.5)"
+              }}
+            >
               {greeting}
-            </p>
+            </motion.p>
 
-            <div className="flex items-center gap-3">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="flex items-center gap-3"
+            >
               <span className="font-semibold tracking-widest" style={{ color: "#E8C9A0", fontSize: "clamp(18px, 3vw, 28px)" }}>
                 從哪裡開始？
               </span>
@@ -137,9 +90,14 @@ export default function Home() {
               >
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </motion.svg>
-            </div>
+            </motion.div>
 
-            <div className="flex flex-wrap gap-2 justify-center max-w-lg">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.7 }}
+              className="flex flex-wrap gap-2 justify-center max-w-xl"
+            >
               {keywords.map((k) => (
                 <Link
                   key={k.href}
@@ -165,8 +123,8 @@ export default function Home() {
                   {k.label}
                 </Link>
               ))}
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </section>
 
         {/* 最新消息 */}
