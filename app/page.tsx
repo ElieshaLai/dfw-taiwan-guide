@@ -39,10 +39,8 @@ export default function Home() {
       <Navbar isHomePage={true} />
 
       <main>
-        {/* Hero — 全螢幕 */}
+        {/* Hero 第一屏 — 問候 + scroll 提示 */}
         <section className="relative" style={{ height: "100vh" }}>
-
-          {/* 背景圖 */}
           <div className="absolute inset-0">
             <Image
               src="/hero.jpg"
@@ -56,9 +54,8 @@ export default function Home() {
             />
           </div>
 
-          {/* 問候 + 從哪裡開始 + 關鍵字 — 置中 */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-5 px-6 z-10 text-center">
-
+          {/* 問候語 — 置中 */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 px-6 z-10 text-center">
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -72,100 +69,133 @@ export default function Home() {
             >
               {greeting}
             </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              className="flex items-center gap-3"
-            >
-              <span className="font-semibold tracking-widest" style={{ color: "#E8C9A0", fontSize: "clamp(18px, 3vw, 28px)" }}>
-                從哪裡開始？
-              </span>
-              <motion.svg
-                animate={{ x: [0, 5, 0] }}
-                transition={{ repeat: Infinity, duration: 1.5 }}
-                width="22" height="22" viewBox="0 0 24 24" fill="none"
-                stroke="#E8C9A0" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-              >
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </motion.svg>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.7 }}
-              className="flex flex-wrap gap-2 justify-center max-w-xl"
-            >
-              {keywords.map((k) => (
-                <Link
-                  key={k.href}
-                  href={k.href}
-                  className="font-medium px-5 py-2.5 rounded-full transition-all duration-150"
-                  style={{
-                    fontSize: "clamp(13px, 2vw, 16px)",
-                    backgroundColor: "rgba(255,255,255,0.1)",
-                    border: "1px solid rgba(196,154,108,0.4)",
-                    color: "#C49A6C",
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(232,168,24,0.2)";
-                    (e.currentTarget as HTMLElement).style.borderColor = "#E8A818";
-                    (e.currentTarget as HTMLElement).style.color = "#E8A818";
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(255,255,255,0.1)";
-                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(196,154,108,0.4)";
-                    (e.currentTarget as HTMLElement).style.color = "#C49A6C";
-                  }}
-                >
-                  {k.label}
-                </Link>
-              ))}
-            </motion.div>
           </div>
+
+          {/* Scroll 提示 — 下方 */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1 }}
+            className="absolute bottom-10 left-0 right-0 flex flex-col items-center gap-2 z-10"
+            style={{ color: "#C49A6C" }}
+          >
+            <span className="text-sm tracking-widest uppercase">Scroll</span>
+            <motion.svg
+              animate={{ y: [0, 8, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5 }}
+              width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+            >
+              <path d="M12 5v14M5 12l7 7 7-7" />
+            </motion.svg>
+          </motion.div>
         </section>
 
-        {/* 最新消息 */}
-        <section id="latest"
-          style={{ backgroundColor: "#FBF5EE", borderTop: "3px solid #C49A6C" }}
-          className="px-6 py-16"
-        >
-          <div className="max-w-5xl mx-auto">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="flex items-center gap-2 font-bold tracking-wide"
-                style={{ color: "#6B4423", fontSize: "20px" }}>
-                <Image src="/speaker-icon.png" alt="最新消息" width={24} height={24} />
-                最新消息
-              </h2>
-              <Link href="/news"
-                className="text-xs font-medium transition-opacity hover:opacity-70"
-                style={{ color: "#A63F24" }}>
-                查看全部 →
-              </Link>
-            </div>
-            <div className="flex flex-col gap-4">
-              {latestNews.map((news, i) => (
-                <Link key={i} href={news.href}
-                  className="flex items-center gap-4 p-4 rounded-xl transition-all duration-150 group"
-                  style={{ backgroundColor: "white", border: "1px solid #e8d8c4" }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.borderColor = "#C49A6C";
-                    (e.currentTarget as HTMLElement).style.backgroundColor = "#fdf0e0";
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.borderColor = "#e8d8c4";
-                    (e.currentTarget as HTMLElement).style.backgroundColor = "white";
-                  }}
+        {/* 第二屏 — 從哪裡開始（左）+ 最新消息（右）*/}
+        <section style={{ backgroundColor: "#FBF5EE", borderTop: "3px solid #C49A6C" }}>
+          <div className="max-w-6xl mx-auto px-6 py-16 flex flex-col md:flex-row gap-16 items-start">
+
+            {/* 左：從哪裡開始 */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7 }}
+              viewport={{ once: true }}
+              className="flex-1"
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <span className="font-semibold tracking-widest" style={{ color: "#6B4423", fontSize: "clamp(18px, 2.5vw, 26px)" }}>
+                  從哪裡開始？
+                </span>
+                <motion.svg
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.5 }}
+                  width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="#6B4423" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
                 >
-                  <span className="text-xs font-mono shrink-0" style={{ color: "#C49A6C" }}>{news.date}</span>
-                  <span className="text-sm font-medium" style={{ color: "#6B4423" }}>{news.title}</span>
-                  <span className="ml-auto text-xs transition-transform group-hover:translate-x-1"
-                    style={{ color: "#C49A6C" }}>→</span>
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </motion.svg>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                {keywords.map((k) => (
+                  <Link
+                    key={k.href}
+                    href={k.href}
+                    className="font-medium px-5 py-2.5 rounded-full transition-all duration-150"
+                    style={{
+                      fontSize: "clamp(13px, 1.5vw, 16px)",
+                      backgroundColor: "rgba(255,255,255,0.1)",
+                      border: "1px solid rgba(196,154,108,0.4)",
+                      color: "#C49A6C",
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLElement).style.backgroundColor = "#fdf0e0";
+                      (e.currentTarget as HTMLElement).style.borderColor = "#C49A6C";
+                      (e.currentTarget as HTMLElement).style.color = "#A63F24";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(255,255,255,0.1)";
+                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(196,154,108,0.4)";
+                      (e.currentTarget as HTMLElement).style.color = "#C49A6C";
+                    }}
+                  >
+                    {k.label}
+                  </Link>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* 分隔線 */}
+            <div className="hidden md:block w-px self-stretch" style={{ backgroundColor: "#e8d8c4" }} />
+
+            {/* 右：最新消息 */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7, delay: 0.15 }}
+              viewport={{ once: true }}
+              className="flex-1"
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="flex items-center gap-2 font-bold"
+                  style={{ color: "#6B4423", fontSize: "clamp(18px, 2.5vw, 26px)" }}>
+                  <Image src="/speaker-icon.png" alt="最新消息" width={24} height={24} />
+                  最新消息
+                </h2>
+                <Link href="/news"
+                  className="text-xs font-medium transition-opacity hover:opacity-70"
+                  style={{ color: "#A63F24" }}>
+                  查看全部 →
                 </Link>
-              ))}
-            </div>
+              </div>
+
+              <div className="flex flex-col gap-3">
+                {latestNews.map((news, i) => (
+                  <Link key={i} href={news.href}
+                    className="flex items-center gap-4 p-4 rounded-xl transition-all duration-150 group"
+                    style={{
+                      backgroundColor: "white",
+                      border: "1px solid #e8d8c4",
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLElement).style.backgroundColor = "#fdf0e0";
+                      (e.currentTarget as HTMLElement).style.borderColor = "#C49A6C";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLElement).style.backgroundColor = "white";
+                      (e.currentTarget as HTMLElement).style.borderColor = "#e8d8c4";
+                    }}
+                  >
+                    <span className="text-xs font-mono shrink-0" style={{ color: "#C49A6C" }}>{news.date}</span>
+                    <span className="text-sm font-medium" style={{ color: "#6B4423" }}>{news.title}</span>
+                    <span className="ml-auto text-xs transition-transform group-hover:translate-x-1"
+                      style={{ color: "#C49A6C" }}>→</span>
+                  </Link>
+                ))}
+              </div>
+            </motion.div>
+
           </div>
         </section>
 
