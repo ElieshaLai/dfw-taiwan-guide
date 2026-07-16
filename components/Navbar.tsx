@@ -134,7 +134,7 @@ export default function Navbar({ isHomePage = false }: { isHomePage?: boolean })
   return (
     <header
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-      style={{ backgroundColor: scrolled ? "#6B4423" : "rgba(107, 68, 35, 0.55)", backdropFilter: scrolled ? "none" : "blur(8px)" }}
+      style={{ backgroundColor: scrolled ? "#6B4423" : "transparent" }}
     >
       {/* Header */}
       <div className="w-full px-4 sm:px-6 h-20 sm:h-24 flex items-center justify-between gap-3">
@@ -256,9 +256,8 @@ export default function Navbar({ isHomePage = false }: { isHomePage?: boolean })
 
         {/* 手機版 */}
         <div className="sm:hidden transition-all duration-300" style={{
-          backgroundColor: scrolled ? "#F9F2E8" : "rgba(249, 242, 232, 0.75)",
-          borderBottom: "2px solid #C49A6C",
-          backdropFilter: scrolled ? "none" : "blur(8px)",
+          backgroundColor: scrolled ? "#F9F2E8" : "transparent",
+          borderBottom: scrolled ? "2px solid #C49A6C" : "none",
         }}>
           <div ref={mobileNavRef} className="flex overflow-x-auto scrollbar-none">
             {navLinksBefore.map((link) => (

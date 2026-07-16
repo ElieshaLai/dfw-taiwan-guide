@@ -76,15 +76,15 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1 }}
-            className="absolute bottom-10 left-0 right-0 flex flex-col items-center gap-2 z-10"
-            style={{ color: "#C49A6C" }}
+            className="absolute bottom-10 left-0 right-0 flex flex-col items-center gap-3 z-10"
+            style={{ color: "white" }}
           >
-            <span className="text-sm tracking-widest uppercase">Scroll</span>
+            <span className="font-medium tracking-widest uppercase" style={{ fontSize: "15px" }}>Scroll</span>
             <motion.svg
-              animate={{ y: [0, 8, 0] }}
+              animate={{ y: [0, 10, 0] }}
               transition={{ repeat: Infinity, duration: 1.5 }}
-              width="20" height="20" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+              width="28" height="28" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
             >
               <path d="M12 5v14M5 12l7 7 7-7" />
             </motion.svg>
@@ -93,7 +93,7 @@ export default function Home() {
 
         {/* 第二屏 — 從哪裡開始（左）+ 最新消息（右）*/}
         <section style={{ backgroundColor: "#FBF5EE", borderTop: "3px solid #C49A6C" }}>
-          <div className="max-w-6xl mx-auto px-6 py-16 flex flex-col md:flex-row gap-16 items-start">
+          <div className="max-w-6xl mx-auto px-6 py-16 flex flex-col md:flex-row gap-12 items-start">
 
             {/* 左：從哪裡開始 */}
             <motion.div
@@ -101,7 +101,7 @@ export default function Home() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7 }}
               viewport={{ once: true }}
-              className="flex-1"
+              className="w-full md:flex-1"
             >
               <div className="flex items-center gap-3 mb-6">
                 <span className="font-semibold tracking-widest" style={{ color: "#6B4423", fontSize: "clamp(18px, 2.5vw, 26px)" }}>
@@ -155,7 +155,7 @@ export default function Home() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, delay: 0.15 }}
               viewport={{ once: true }}
-              className="flex-1"
+              className="w-full md:flex-1"
             >
               <div className="flex items-center justify-between mb-6">
                 <h2 className="flex items-center gap-2 font-bold"
