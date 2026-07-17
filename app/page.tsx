@@ -88,7 +88,7 @@ export default function Home() {
                 </span>
                 <span
                   className="font-medium"
-                  style={{ fontSize: "clamp(12px, 1.6vw, 17px)", color: "#6B4423", opacity: 0.7, letterSpacing: "0.12em", marginTop: "10px" }}
+                  style={{ fontSize: "clamp(16px, 2.2vw, 24px)", color: "#6B4423", opacity: 0.7, letterSpacing: "0.12em", marginTop: "10px" }}
                 >
                   {greeting?.tailo}
                 </span>
@@ -104,7 +104,7 @@ export default function Home() {
                 </span>
                 <span
                   className="font-medium"
-                  style={{ fontSize: "clamp(12px, 1.6vw, 17px)", color: "#6B4423", opacity: 0.7, letterSpacing: "0.12em", marginTop: "10px" }}
+                  style={{ fontSize: "clamp(16px, 2.2vw, 24px)", color: "#6B4423", opacity: 0.7, letterSpacing: "0.12em", marginTop: "10px" }}
                 >
                   {greeting?.subTailo}
                 </span>
