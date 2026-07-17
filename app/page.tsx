@@ -4,7 +4,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import Navbar from "../components/Navbar";
 
 function getGreeting(): string {
@@ -34,6 +34,12 @@ export default function Home() {
 
   useEffect(() => { setGreeting(getGreeting()); }, []);
 
+  const { scrollY } = useScroll();
+  // 紙飛機跟著 scroll 往下移動
+  const planeY = useTransform(scrollY, [0, 800], [0, 600]);
+  const planeX = useTransform(scrollY, [0, 800], [0, 80]);
+  const planeRotate = useTransform(scrollY, [0, 800], [0, 15]);
+
   return (
     <>
       <Navbar isHomePage={true} />
@@ -48,7 +54,7 @@ export default function Home() {
               alt="DFW Taiwan Guide"
               fill
               className="hidden sm:block"
-              style={{ objectFit: "cover", objectPosition: "center top" }}
+              style={{ objectFit: "cover", objectPosition: "60% top" }}
               priority
             />
             {/* 手機版圖片 */}
@@ -80,6 +86,40 @@ export default function Home() {
             >
               {greeting}
             </motion.p>
+          </div>
+
+          {/* 紙飛機 + 虛線路徑 */}
+          <div className="absolute inset-0 pointer-events-none z-20 overflow-hidden">
+            {/* 虛線路徑 */}
+            <svg
+              className="absolute"
+              style={{ left: "22%", top: "22%", width: "80px", height: "60vh" }}
+              viewBox="0 0 80 600"
+              fill="none"
+            >
+              <path
+                d="M 40 0 C 50 150, 20 300, 40 450, 50 550, 40 600"
+                stroke="#4a2010"
+                strokeWidth="1.5"
+                strokeDasharray="6 6"
+                opacity="0.3"
+              />
+            </svg>
+
+            {/* 紙飛機 */}
+            <motion.div
+              style={{
+                position: "absolute",
+                left: "20%",
+                top: "20%",
+                y: planeY,
+                x: planeX,
+                rotate: planeRotate,
+              }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/paper-plane.png" alt="紙飛機" width={80} height={80} style={{ display: "block" }} />
+            </motion.div>
           </div>
 
           {/* Scroll 提示 — 下方 */}
