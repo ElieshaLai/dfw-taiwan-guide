@@ -42,10 +42,21 @@ export default function Home() {
         {/* Hero 第一屏 — 問候 + scroll 提示 */}
         <section className="relative" style={{ height: "100vh", backgroundColor: "#a5defd" }}>
           <div className="absolute inset-0 flex items-center justify-center">
+            {/* 桌面版圖片 */}
             <Image
               src="/hero.png"
               alt="DFW Taiwan Guide"
               fill
+              className="hidden sm:block"
+              style={{ objectFit: "cover", objectPosition: "center top" }}
+              priority
+            />
+            {/* 手機版圖片 */}
+            <Image
+              src="/hero-mobile.png"
+              alt="DFW Taiwan Guide"
+              fill
+              className="sm:hidden"
               style={{ objectFit: "cover", objectPosition: "center top" }}
               priority
             />
