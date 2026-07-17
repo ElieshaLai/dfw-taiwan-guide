@@ -40,17 +40,17 @@ export default function Home() {
 
       <main>
         {/* Hero 第一屏 — 問候 + scroll 提示 */}
-        <section className="relative" style={{ height: "100vh" }}>
-          <div className="absolute inset-0">
+        <section className="relative" style={{ height: "100vh", backgroundColor: "#a5defd" }}>
+          <div className="absolute inset-0 flex items-center justify-center">
             <Image
               src="/hero.png"
               alt="DFW Taiwan Guide"
               fill
-              style={{ objectFit: "cover", objectPosition: "center" }}
+              style={{ objectFit: "cover", objectPosition: "center top" }}
               priority
             />
             <div className="absolute inset-0"
-              style={{ background: "linear-gradient(to right, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.1) 60%, transparent 100%)" }}
+              style={{ background: "linear-gradient(to right, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.05) 60%, transparent 100%)" }}
             />
           </div>
 
