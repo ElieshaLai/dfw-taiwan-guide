@@ -43,14 +43,14 @@ export default function Home() {
         <section className="relative" style={{ height: "100vh" }}>
           <div className="absolute inset-0">
             <Image
-              src="/hero.jpg"
+              src="/hero.png"
               alt="DFW Taiwan Guide"
               fill
               style={{ objectFit: "cover", objectPosition: "center" }}
               priority
             />
             <div className="absolute inset-0"
-              style={{ background: "linear-gradient(to bottom, rgba(40,15,5,0.15) 0%, rgba(40,15,5,0.72) 100%)" }}
+              style={{ background: "linear-gradient(to right, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.1) 60%, transparent 100%)" }}
             />
           </div>
 
@@ -63,8 +63,8 @@ export default function Home() {
               className="font-black"
               style={{
                 fontSize: "clamp(64px, 14vw, 120px)",
-                color: "#E8C9A0",
-                textShadow: "0 2px 32px rgba(0,0,0,0.5)"
+                color: "#4a2010",
+                textShadow: "0 2px 20px rgba(255,255,255,0.3)"
               }}
             >
               {greeting}
@@ -77,7 +77,7 @@ export default function Home() {
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1 }}
             className="absolute bottom-10 left-0 right-0 flex flex-col items-center gap-3 z-10"
-            style={{ color: "white" }}
+            style={{ color: "#6B4423" }}
           >
             <span className="font-medium tracking-widest uppercase" style={{ fontSize: "15px" }}>Scroll</span>
             <motion.svg
@@ -104,17 +104,16 @@ export default function Home() {
               className="w-full md:flex-1"
             >
               <div className="flex items-center gap-3 mb-6">
+                <Image src="/question.png" alt="從哪裡開始" width={28} height={28} />
                 <span className="font-semibold tracking-widest" style={{ color: "#6B4423", fontSize: "clamp(18px, 2.5vw, 26px)" }}>
                   從哪裡開始？
                 </span>
-                <motion.svg
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ repeat: Infinity, duration: 1.5 }}
+                <svg
                   width="20" height="20" viewBox="0 0 24 24" fill="none"
                   stroke="#6B4423" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
                 >
                   <path d="M5 12h14M12 5l7 7-7 7" />
-                </motion.svg>
+                </svg>
               </div>
 
               <div className="flex flex-wrap gap-2">
@@ -125,9 +124,10 @@ export default function Home() {
                     className="font-medium px-5 py-2.5 rounded-full transition-all duration-150"
                     style={{
                       fontSize: "clamp(13px, 1.5vw, 16px)",
-                      backgroundColor: "rgba(255,255,255,0.1)",
-                      border: "1px solid rgba(196,154,108,0.4)",
-                      color: "#C49A6C",
+                      backgroundColor: "white",
+                      border: "1px solid #C49A6C",
+                      color: "#6B4423",
+                      fontWeight: 600,
                     }}
                     onMouseEnter={(e) => {
                       (e.currentTarget as HTMLElement).style.backgroundColor = "#fdf0e0";
@@ -135,9 +135,9 @@ export default function Home() {
                       (e.currentTarget as HTMLElement).style.color = "#A63F24";
                     }}
                     onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(255,255,255,0.1)";
-                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(196,154,108,0.4)";
-                      (e.currentTarget as HTMLElement).style.color = "#C49A6C";
+                      (e.currentTarget as HTMLElement).style.backgroundColor = "white";
+                      (e.currentTarget as HTMLElement).style.borderColor = "#C49A6C";
+                      (e.currentTarget as HTMLElement).style.color = "#6B4423";
                     }}
                   >
                     {k.label}
