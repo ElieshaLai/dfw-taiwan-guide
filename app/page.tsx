@@ -7,11 +7,13 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 
-function getGreeting(): string {
+type Greeting = { zh: string; tailo: string; sub: string; subTailo: string };
+
+function getGreeting(): Greeting {
   const hour = new Date().getHours();
-  if (hour >= 5 && hour < 12)  return "早安";
-  if (hour >= 12 && hour < 18) return "午安";
-  return "晚安";
+  if (hour >= 5 && hour < 12)  return { zh: "早安！", tailo: "gâu-tsá", sub: "咱做伙加油！", subTailo: "lán tsò-hué ka-iû" };
+  if (hour >= 12 && hour < 18) return { zh: "午安！", tailo: "ngóo-an", sub: "甲飽袂？", subTailo: "tsia̍h-pá--buē" };
+  return { zh: "晚安！", tailo: "buán-an", sub: "卡早睏！", subTailo: "khah-tsá khùn" };
 }
 
 const keywords = [
@@ -31,7 +33,7 @@ const latestNews = [
 
 
 export default function Home() {
-  const [greeting, setGreeting] = useState("");
+  const [greeting, setGreeting] = useState<Greeting | null>(null);
 
   useEffect(() => { setGreeting(getGreeting()); }, []);
 
@@ -70,19 +72,44 @@ export default function Home() {
 
           {/* 問候語 — 置中 */}
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 px-6 z-10 text-center">
-            <motion.p
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="font-black"
-              style={{
-                fontSize: "clamp(64px, 14vw, 120px)",
-                color: "#4a2010",
-                textShadow: "0 2px 20px rgba(255,255,255,0.3)"
-              }}
+              className="flex flex-col items-center"
             >
-              {greeting}
-            </motion.p>
+              {/* 主問候 */}
+              <div className="flex flex-col items-center" style={{ lineHeight: 1, marginBottom: "12px" }}>
+                <span
+                  className="font-black"
+                  style={{ fontSize: "clamp(64px, 14vw, 120px)", color: "#4a2010", textShadow: "0 2px 20px rgba(255,255,255,0.3)", lineHeight: 1 }}
+                >
+                  {greeting?.zh}
+                </span>
+                <span
+                  className="font-medium tracking-widest"
+                  style={{ fontSize: "clamp(12px, 1.8vw, 18px)", color: "#6B4423", opacity: 0.7, letterSpacing: "0.18em", marginTop: "2px" }}
+                >
+                  {greeting?.tailo}
+                </span>
+              </div>
+
+              {/* 副問候 */}
+              <div className="flex flex-col items-center" style={{ lineHeight: 1 }}>
+                <span
+                  className="font-bold"
+                  style={{ fontSize: "clamp(22px, 3.5vw, 38px)", color: "#4a2010", textShadow: "0 1px 12px rgba(255,255,255,0.3)", lineHeight: 1 }}
+                >
+                  {greeting?.sub}
+                </span>
+                <span
+                  className="font-medium tracking-widest"
+                  style={{ fontSize: "clamp(10px, 1.2vw, 14px)", color: "#6B4423", opacity: 0.7, letterSpacing: "0.18em", marginTop: "2px" }}
+                >
+                  {greeting?.subTailo}
+                </span>
+              </div>
+            </motion.div>
           </div>
 
           {/* Scroll 提示 — 下方 */}
