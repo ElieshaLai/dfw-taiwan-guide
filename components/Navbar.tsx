@@ -76,17 +76,21 @@ function DesktopTab({ href, label, lordicon, isActive }: {
 function MobileTab({ href, label, Icon, isActive }: {
   href: string; label: string; Icon: React.ElementType; isActive: boolean;
 }) {
+  const ref = useRef<HTMLAnchorElement>(null);
+
+  useEffect(() => {
+    if (isActive && ref.current) {
+      setTimeout(() => {
+        ref.current?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      }, 100);
+    }
+  }, [isActive]);
+
   return (
     <Link
       href={href}
+      ref={ref}
       data-active={isActive ? "true" : "false"}
-      ref={(el) => {
-        if (el && isActive) {
-          setTimeout(() => {
-            el.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-          }, 100);
-        }
-      }}
       className="flex items-center gap-1.5 px-4 py-3 border-b-2 transition-all duration-150 whitespace-nowrap"
       style={{
         borderBottomColor: isActive ? "#A63F24" : "transparent",
