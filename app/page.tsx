@@ -79,32 +79,32 @@ export default function Home() {
               className="flex flex-col items-center"
             >
               {/* 主問候 */}
-              <div className="flex flex-col items-center" style={{ lineHeight: 1, marginBottom: "12px" }}>
+              <div className="flex flex-col items-center" style={{ marginBottom: "20px" }}>
                 <span
                   className="font-black"
-                  style={{ fontSize: "clamp(64px, 14vw, 120px)", color: "#4a2010", textShadow: "0 2px 20px rgba(255,255,255,0.3)", lineHeight: 1 }}
+                  style={{ fontSize: "clamp(64px, 12vw, 110px)", color: "#4a2010", textShadow: "0 2px 20px rgba(255,255,255,0.3)", lineHeight: 1 }}
                 >
                   {greeting?.zh}
                 </span>
                 <span
-                  className="font-medium tracking-widest"
-                  style={{ fontSize: "clamp(12px, 1.8vw, 18px)", color: "#6B4423", opacity: 0.7, letterSpacing: "0.18em", marginTop: "2px" }}
+                  className="font-medium"
+                  style={{ fontSize: "clamp(12px, 1.6vw, 17px)", color: "#6B4423", opacity: 0.7, letterSpacing: "0.12em", marginTop: "10px" }}
                 >
                   {greeting?.tailo}
                 </span>
               </div>
 
               {/* 副問候 */}
-              <div className="flex flex-col items-center" style={{ lineHeight: 1 }}>
+              <div className="flex flex-col items-center">
                 <span
-                  className="font-bold"
-                  style={{ fontSize: "clamp(22px, 3.5vw, 38px)", color: "#4a2010", textShadow: "0 1px 12px rgba(255,255,255,0.3)", lineHeight: 1 }}
+                  className="font-black"
+                  style={{ fontSize: "clamp(64px, 12vw, 110px)", color: "#4a2010", textShadow: "0 2px 20px rgba(255,255,255,0.3)", lineHeight: 1 }}
                 >
                   {greeting?.sub}
                 </span>
                 <span
-                  className="font-medium tracking-widest"
-                  style={{ fontSize: "clamp(10px, 1.2vw, 14px)", color: "#6B4423", opacity: 0.7, letterSpacing: "0.18em", marginTop: "2px" }}
+                  className="font-medium"
+                  style={{ fontSize: "clamp(12px, 1.6vw, 17px)", color: "#6B4423", opacity: 0.7, letterSpacing: "0.12em", marginTop: "10px" }}
                 >
                   {greeting?.subTailo}
                 </span>
