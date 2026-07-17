@@ -79,34 +79,38 @@ export default function Home() {
               className="flex flex-col items-center"
             >
               {/* 主問候 */}
-              <div className="flex flex-col items-center" style={{ marginBottom: "20px" }}>
-                <span
-                  className="font-black"
-                  style={{ fontSize: "clamp(64px, 12vw, 110px)", color: "#4a2010", textShadow: "0 2px 20px rgba(255,255,255,0.3)", lineHeight: 1 }}
-                >
-                  {greeting?.zh}
-                </span>
-                <span
-                  className="font-medium"
-                  style={{ fontSize: "clamp(16px, 2.2vw, 24px)", color: "#6B4423", opacity: 0.7, letterSpacing: "0.12em", marginTop: "10px" }}
-                >
-                  {greeting?.tailo}
+              <div className="flex items-start" style={{ marginBottom: "20px" }}>
+                <div className="flex flex-col items-center">
+                  <span className="font-black"
+                    style={{ fontSize: "clamp(64px, 12vw, 110px)", color: "#4a2010", textShadow: "0 2px 20px rgba(255,255,255,0.3)", lineHeight: 1 }}>
+                    {greeting?.zh.replace("！", "").replace("？", "")}
+                  </span>
+                  <span className="font-medium"
+                    style={{ fontSize: "clamp(16px, 2.2vw, 24px)", color: "#6B4423", opacity: 0.7, letterSpacing: "0.12em", marginTop: "10px" }}>
+                    {greeting?.tailo}
+                  </span>
+                </div>
+                <span className="font-black"
+                  style={{ fontSize: "clamp(64px, 12vw, 110px)", color: "#4a2010", lineHeight: 1 }}>
+                  {greeting?.zh.includes("！") ? "！" : "？"}
                 </span>
               </div>
 
               {/* 副問候 */}
-              <div className="flex flex-col items-center">
-                <span
-                  className="font-black"
-                  style={{ fontSize: "clamp(64px, 12vw, 110px)", color: "#4a2010", textShadow: "0 2px 20px rgba(255,255,255,0.3)", lineHeight: 1 }}
-                >
-                  {greeting?.sub}
-                </span>
-                <span
-                  className="font-medium"
-                  style={{ fontSize: "clamp(16px, 2.2vw, 24px)", color: "#6B4423", opacity: 0.7, letterSpacing: "0.12em", marginTop: "10px" }}
-                >
-                  {greeting?.subTailo}
+              <div className="flex items-start">
+                <div className="flex flex-col items-center">
+                  <span className="font-black"
+                    style={{ fontSize: "clamp(64px, 12vw, 110px)", color: "#4a2010", textShadow: "0 2px 20px rgba(255,255,255,0.3)", lineHeight: 1 }}>
+                    {greeting?.sub.replace("！", "").replace("？", "")}
+                  </span>
+                  <span className="font-medium"
+                    style={{ fontSize: "clamp(16px, 2.2vw, 24px)", color: "#6B4423", opacity: 0.7, letterSpacing: "0.12em", marginTop: "10px" }}>
+                    {greeting?.subTailo}
+                  </span>
+                </div>
+                <span className="font-black"
+                  style={{ fontSize: "clamp(64px, 12vw, 110px)", color: "#4a2010", lineHeight: 1 }}>
+                  {greeting?.sub.includes("！") ? "！" : "？"}
                 </span>
               </div>
             </motion.div>
