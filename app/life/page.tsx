@@ -15,7 +15,7 @@ export default function LifePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/articles?category=新生活指南")
+    fetch(`/api/articles?category=${encodeURIComponent("新生活指南")}`)
       .then(r => r.json())
       .then(data => {
         setArticles(data);
