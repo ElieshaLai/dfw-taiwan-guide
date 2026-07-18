@@ -1,16 +1,15 @@
 // app/life/[slug]/page.tsx
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { useParams } from "next/navigation";
 import Navbar from "../../../components/Navbar";
-import { getArticleBySlug } from "../../../lib/notion";
 import {
   Breadcrumb, BreadcrumbItem, BreadcrumbLink,
   BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
-export const revalidate = 3600;
-
-// 把 Notion block 轉成 HTML
 function renderBlock(block: any): string {
   const text = (richText: any[]) =>
     richText?.map((t: any) => {
@@ -47,9 +46,46 @@ function renderBlock(block: any): string {
   }
 }
 
-export default async function ArticlePage({ params }: { params: { slug: string } }) {
-  const article = await getArticleBySlug(params.slug);
-  if (!article) notFound();
+export default function ArticlePage() {
+  const params = useParams();
+  const slug = params.slug as string;
+  const [article, setArticle] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
+
+  useEffect(() => {
+    fetch(`/api/articles/${slug}`)
+      .then(r => {
+        if (r.status === 404) { setNotFound(true); setLoading(false); return null; }
+        return r.json();
+      })
+      .then(data => {
+        if (data) setArticle(data);
+        setLoading(false);
+      });
+  }, [slug]);
+
+  if (loading) return (
+    <>
+      <Navbar />
+      <main style={{ backgroundColor: "#FBF5EE", minHeight: "100vh", paddingTop: "140px" }}>
+        <div className="max-w-3xl mx-auto px-6 py-10">
+          <p style={{ color: "#C49A6C" }}>載入中⋯</p>
+        </div>
+      </main>
+    </>
+  );
+
+  if (notFound || !article) return (
+    <>
+      <Navbar />
+      <main style={{ backgroundColor: "#FBF5EE", minHeight: "100vh", paddingTop: "140px" }}>
+        <div className="max-w-3xl mx-auto px-6 py-10">
+          <p style={{ color: "#A63F24" }}>找不到文章</p>
+        </div>
+      </main>
+    </>
+  );
 
   const html = article.blocks.map(renderBlock).join("\n");
 
@@ -82,11 +118,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
             <p className="text-xs mb-8" style={{ color: "#C49A6C" }}>{article.date}</p>
           )}
 
-          {/* 文章內容 */}
-          <div
-            className="notion-content"
-            dangerouslySetInnerHTML={{ __html: html }}
-          />
+          <div className="notion-content" dangerouslySetInnerHTML={{ __html: html }} />
         </div>
       </main>
 

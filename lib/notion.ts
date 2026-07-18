@@ -59,6 +59,7 @@ export async function getArticles(category?: string): Promise<Article[]> {
 
 // 抓單篇文章（by slug）
 export async function getArticleBySlug(slug: string) {
+  console.log("getArticleBySlug called with slug:", slug);
   const response = await fetch(
     `https://api.notion.com/v1/databases/${databaseId}/query`,
     {
@@ -81,6 +82,7 @@ export async function getArticleBySlug(slug: string) {
   );
 
   const data = await response.json();
+  console.log("slug query result:", JSON.stringify(data).slice(0, 300));
   if (!data.results || data.results.length === 0) return null;
 
   const page = data.results[0];
