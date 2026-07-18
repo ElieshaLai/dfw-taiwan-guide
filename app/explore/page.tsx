@@ -3,8 +3,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import Navbar from "../../components/Navbar";
+import LocationPin from "../../components/LocationPin";
 import { supabase } from "../../lib/supabase";
 import {
   Breadcrumb, BreadcrumbItem, BreadcrumbLink,
@@ -72,7 +72,6 @@ export default function ExplorePage() {
             🎉 社群與玩樂
           </h1>
 
-          {/* Filter */}
           <div className="flex flex-wrap gap-2 mb-6">
             {CATEGORIES.map(cat => {
               const isActive = selected.includes(cat);
@@ -107,7 +106,6 @@ export default function ExplorePage() {
               <div key={c.id} className="p-5 rounded-xl flex gap-4"
                 style={{ backgroundColor: "white", border: "1px solid #e8d8c4" }}>
 
-                {/* Profile pic */}
                 {c.image_url ? (
                   <div className="shrink-0">
                     <img src={c.image_url} alt={c.name}
@@ -133,7 +131,9 @@ export default function ExplorePage() {
                     <p className="text-sm mb-2" style={{ color: "#888" }}>{c.description}</p>
                   )}
                   {c.location && (
-                    <p className="text-xs mb-1" style={{ color: "#C49A6C" }}>📍 {c.location}</p>
+                    <p className="text-xs mb-1" style={{ color: "#C49A6C" }}>
+                      <LocationPin text={c.location} />
+                    </p>
                   )}
                   {c.contact && (
                     <p className="text-xs mb-2" style={{ color: "#C49A6C" }}>📞 {c.contact}</p>

@@ -4,6 +4,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
+import LocationPin from "../../components/LocationPin";
 import { supabase } from "../../lib/supabase";
 import {
   Breadcrumb, BreadcrumbItem, BreadcrumbLink,
@@ -80,7 +81,6 @@ export default function DirectoryPage() {
             台灣人推薦的專業人士，找對人少走冤枉路
           </p>
 
-          {/* Filter */}
           <div className="flex flex-wrap gap-2 mb-6">
             {CATEGORIES.map(cat => {
               const isActive = selected.includes(cat);
@@ -123,7 +123,6 @@ export default function DirectoryPage() {
                   (el.currentTarget as HTMLElement).style.backgroundColor = "white";
                 }}>
 
-                {/* Profile pic */}
                 {e.image_url ? (
                   <div className="shrink-0">
                     <img src={e.image_url} alt={e.name}
@@ -145,7 +144,6 @@ export default function DirectoryPage() {
                       {categoryEmoji[e.category]} {e.category}
                     </span>
                   </div>
-
                   {e.title && (
                     <p className="text-sm font-medium mb-1" style={{ color: "#A63F24" }}>{e.title}</p>
                   )}
@@ -156,9 +154,10 @@ export default function DirectoryPage() {
                     <p className="text-sm mb-2" style={{ color: "#888" }}>{e.description}</p>
                   )}
                   {e.city && (
-                    <p className="text-xs mb-1" style={{ color: "#C49A6C" }}>📍 {e.city}</p>
+                    <p className="text-xs mb-1" style={{ color: "#C49A6C" }}>
+                      <LocationPin text={e.city} />
+                    </p>
                   )}
-
                   <div className="flex flex-wrap gap-3 mt-2">
                     {e.phone && (
                       <a href={`tel:${e.phone}`} className="text-xs font-medium hover:opacity-70"
