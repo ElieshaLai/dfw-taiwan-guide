@@ -49,8 +49,8 @@ const navLinksAfter = [
 ];
 
 const foodShoppingLinks = [
-  { href: "/restaurants", icon: <MapIcon className="w-4 h-4" />,         title: "美食地圖", description: "台灣餐廳、早午餐、小吃推薦" },
-  { href: "/shopping",    icon: <ShoppingBagIcon className="w-4 h-4" />, title: "購物地圖", description: "亞洲超市、台灣商品採買指南" },
+  { href: "/restaurants", icon: <MapIcon className="w-4 h-4" />,         title: "美食地圖", description: "台灣餐廳、版主口袋名單" },
+  { href: "/shopping",    icon: <ShoppingBagIcon className="w-4 h-4" />, title: "購物地圖", description: "亞洲超市、採買指南" },
 ];
 
 function DesktopTab({ href, label, lordicon, isActive }: {
@@ -305,7 +305,7 @@ export default function Navbar({ isHomePage = false }: { isHomePage?: boolean })
             style={{ color: "#6B4423", borderBottom: "1px solid #f0e4d0" }}>
             <MapIcon size={16} style={{ color: "#A63F24" }} />
             <span className="text-sm font-medium">美食地圖</span>
-            <span className="text-xs ml-1" style={{ color: "#C49A6C" }}>台灣餐廳、早午餐、小吃</span>
+            <span className="text-xs ml-1" style={{ color: "#C49A6C" }}>台灣餐廳、版主口袋名單</span>
           </Link>
           <Link href="/shopping" onClick={() => setFoodOpen(false)}
             className="flex items-center gap-3 px-6 py-4 transition-colors"

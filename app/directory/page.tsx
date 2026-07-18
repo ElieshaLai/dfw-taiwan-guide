@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import Navbar from "../../components/Navbar";
 import LocationPin from "../../components/LocationPin";
 import { supabase } from "../../lib/supabase";
@@ -74,8 +75,9 @@ export default function DirectoryPage() {
             </BreadcrumbList>
           </Breadcrumb>
 
-          <h1 className="font-bold mb-2" style={{ color: "#6B4423", fontSize: "24px" }}>
-            📇 名片與推薦
+          <h1 className="flex items-center gap-3 font-bold mb-2" style={{ color: "#6B4423", fontSize: "24px" }}>
+            <Image src="/thumb-up-icon.png" alt="名片與推薦" width={32} height={32} />
+            名片與推薦
           </h1>
           <p className="text-sm mb-6" style={{ color: "#C49A6C" }}>
             台灣人推薦的專業人士，找對人少走冤枉路

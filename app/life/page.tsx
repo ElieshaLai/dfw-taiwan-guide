@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import Navbar from "../../components/Navbar";
 import { Article } from "../../lib/notion";
 import {
@@ -41,8 +42,9 @@ export default function LifePage() {
             </BreadcrumbList>
           </Breadcrumb>
 
-          <h1 className="font-bold mb-2" style={{ color: "#6B4423", fontSize: "24px" }}>
-            📘 新生活指南
+          <h1 className="flex items-center gap-3 font-bold mb-2" style={{ color: "#6B4423", fontSize: "24px" }}>
+            <Image src="/compass-icon.png" alt="新生活指南" width={32} height={32} />
+            新生活指南
           </h1>
           <p className="text-sm mb-8" style={{ color: "#C49A6C" }}>
             銀行、駕照、保險、搬家流程⋯ 一次搞懂達拉斯生活

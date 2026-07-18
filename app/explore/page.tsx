@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import Navbar from "../../components/Navbar";
 import LocationPin from "../../components/LocationPin";
 import { supabase } from "../../lib/supabase";
@@ -68,8 +69,9 @@ export default function ExplorePage() {
             </BreadcrumbList>
           </Breadcrumb>
 
-          <h1 className="font-bold mb-6" style={{ color: "#6B4423", fontSize: "24px" }}>
-            🎉 社群與玩樂
+          <h1 className="flex items-center gap-3 font-bold mb-6" style={{ color: "#6B4423", fontSize: "24px" }}>
+            <Image src="/group-icon.png" alt="社群與玩樂" width={32} height={32} />
+            社群與玩樂
           </h1>
 
           <div className="flex flex-wrap gap-2 mb-6">
