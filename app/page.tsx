@@ -100,7 +100,7 @@ export default function Home() {
               <div className="flex items-start">
                 <div className="flex flex-col items-center">
                   <span className="font-black whitespace-nowrap"
-                    style={{ fontSize: "clamp(40px, 9vw, 110px)", color: "#4a2010", textShadow: "0 2px 20px rgba(255,255,255,0.3)", lineHeight: 1 }}>
+                    style={{ fontSize: "clamp(48px, 10vw, 110px)", color: "#4a2010", textShadow: "0 2px 20px rgba(255,255,255,0.3)", lineHeight: 1 }}>
                     {greeting?.sub.replace("！", "").replace("？", "")}
                   </span>
                   <span className="font-medium"
@@ -109,7 +109,7 @@ export default function Home() {
                   </span>
                 </div>
                 <span className="font-black"
-                  style={{ fontSize: "clamp(40px, 9vw, 110px)", color: "#4a2010", lineHeight: 1 }}>
+                  style={{ fontSize: "clamp(48px, 10vw, 110px)", color: "#4a2010", lineHeight: 1 }}>
                   {greeting?.sub.includes("！") ? "！" : "？"}
                 </span>
               </div>
