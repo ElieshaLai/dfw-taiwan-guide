@@ -4,6 +4,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import PhoneLink from "../../components/PhoneLink";
+import EmailLink from "../../components/EmailLink";
 import Navbar from "../../components/Navbar";
 import LocationPin from "../../components/LocationPin";
 import { supabase } from "../../lib/supabase";
@@ -140,11 +142,21 @@ export default function ExplorePage() {
                     </p>
                   )}
                   {c.contact && (
-                    <p className="text-xs mb-2" style={{ color: "#C49A6C" }}>📞 {c.contact}</p>
+                    <p className="text-xs mb-1" style={{ color: "#C49A6C" }}>
+                      <span className="inline-flex items-center gap-1">
+                        <Image src="/phone.png" alt="phone" width={12} height={12} />
+                        {c.contact}
+                      </span>
+                    </p>
                   )}
                   {c.email && (
                     <p className="text-xs mb-1" style={{ color: "#C49A6C" }}>
-                      <a href={`mailto:${c.email}`} className="hover:opacity-70">✉️ {c.email}</a>
+                      <a href={`mailto:${c.email}`} className="hover:opacity-70">
+                        <span className="inline-flex items-center gap-1">
+                          <Image src="/email.png" alt="email" width={12} height={12} />
+                          {c.email}
+                        </span>
+                      </a>
                     </p>
                   )}
                   </div>

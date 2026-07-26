@@ -4,6 +4,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import PhoneLink from "../../components/PhoneLink";
+import EmailLink from "../../components/EmailLink";
 import Navbar from "../../components/Navbar";
 import { supabase } from "../../lib/supabase";
 import {

@@ -4,6 +4,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import PhoneLink from "../../components/PhoneLink";
+import EmailLink from "../../components/EmailLink";
 import Navbar from "../../components/Navbar";
 import LocationPin from "../../components/LocationPin";
 import { supabase } from "../../lib/supabase";
@@ -164,13 +166,13 @@ export default function DirectoryPage() {
                     {e.phone && (
                       <a href={`tel:${e.phone}`} className="text-xs font-medium hover:opacity-70"
                         style={{ color: "#6B4423" }}>
-                        📞 {e.phone}
+                        <PhoneLink phone={e.phone} />
                       </a>
                     )}
                     {e.email && (
                       <a href={`mailto:${e.email}`} className="text-xs font-medium hover:opacity-70"
                         style={{ color: "#E8A818" }}>
-                        ✉️ {e.email}
+                        <EmailLink email={e.email} />
                       </a>
                     )}
                   </div>
