@@ -138,7 +138,27 @@ export default function Home() {
 
         {/* 第二屏 — 從哪裡開始（左）+ 最新消息（右）*/}
         <section style={{ backgroundColor: "#FBF5EE", borderTop: "3px solid #C49A6C" }}>
-          <div className="max-w-6xl mx-auto px-6 py-16 flex flex-col md:flex-row gap-12 items-start">
+          <div className="max-w-6xl mx-auto px-6 py-16">
+            {/* 歡迎訊息 — 全寬 */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+              viewport={{ once: true }}
+              className="mb-10 pb-8"
+              style={{ borderBottom: "1px solid #e8d8c4" }}
+            >
+              <p className="font-semibold mb-2" style={{ color: "#6B4423", fontSize: "16px" }}>
+                哈囉哩厚！Welcome to DFW Taiwan Guide! 🇹🇼🤠
+              </p>
+              <p className="leading-relaxed" style={{ color: "#888", fontSize: "14px", maxWidth: "600px" }}>
+                不論你是初來乍到，還是在 DFW 生活多年的老鳥，希望你都能在這裡找到需要的資訊。<br />
+                這裡整理了居住、教育、美食，以及各種生活大小事，希望陪伴每一位在 DFW 生活的台灣人，一起探索這座城市。
+              </p>
+            </motion.div>
+
+            {/* 左右分割 */}
+            <div className="flex flex-col md:flex-row gap-12 items-start">
 
             {/* 左：從哪裡開始 */}
             <motion.div
@@ -241,6 +261,7 @@ export default function Home() {
               </div>
             </motion.div>
 
+            </div>{/* 左右分割 end */}
           </div>
         </section>
 
