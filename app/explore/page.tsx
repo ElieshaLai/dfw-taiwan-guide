@@ -122,7 +122,8 @@ export default function ExplorePage() {
                   </div>
                 )}
 
-                <div className="flex-1 min-w-0">
+                <div className="flex-1 min-w-0 flex flex-col">
+                  <div className="flex-1">
                   <div className="flex items-start justify-between gap-2 mb-1">
                     <h2 className="font-bold" style={{ color: "#6B4423", fontSize: "16px" }}>{c.name}</h2>
                     <span className="text-xs px-2 py-0.5 rounded-full shrink-0"
@@ -141,22 +142,21 @@ export default function ExplorePage() {
                   {c.contact && (
                     <p className="text-xs mb-2" style={{ color: "#C49A6C" }}>📞 {c.contact}</p>
                   )}
-                  <div className="flex flex-wrap gap-3 mt-1">
-                    {c.email && (
-                      <a href={`mailto:${c.email}`}
-                        className="text-xs font-medium hover:opacity-70"
-                        style={{ color: "#6B4423" }}>
-                        ✉️ {c.email}
-                      </a>
-                    )}
-                    {c.url && (
+                  {c.email && (
+                    <p className="text-xs mb-1" style={{ color: "#C49A6C" }}>
+                      <a href={`mailto:${c.email}`} className="hover:opacity-70">✉️ {c.email}</a>
+                    </p>
+                  )}
+                  </div>
+                  {c.url && (
+                    <div className="flex justify-end mt-2">
                       <a href={c.url} target="_blank" rel="noopener noreferrer"
                         className="text-xs font-medium hover:opacity-70"
                         style={{ color: "#E8A818" }}>
                         更多資訊 →
                       </a>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
