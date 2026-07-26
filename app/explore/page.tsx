@@ -20,6 +20,7 @@ type Community = {
   location: string;
   contact: string;
   url: string;
+  email: string;
   image_url: string;
 };
 
@@ -130,7 +131,7 @@ export default function ExplorePage() {
                     </span>
                   </div>
                   {c.description && (
-                    <p className="text-sm mb-2" style={{ color: "#888" }}>{c.description}</p>
+                    <p className="text-sm mb-2" style={{ color: "#888", whiteSpace: "pre-wrap" }}>{c.description}</p>
                   )}
                   {c.location && (
                     <p className="text-xs mb-1" style={{ color: "#C49A6C" }}>
@@ -140,13 +141,22 @@ export default function ExplorePage() {
                   {c.contact && (
                     <p className="text-xs mb-2" style={{ color: "#C49A6C" }}>📞 {c.contact}</p>
                   )}
-                  {c.url && (
-                    <a href={c.url} target="_blank" rel="noopener noreferrer"
-                      className="text-xs font-medium hover:opacity-70"
-                      style={{ color: "#E8A818" }}>
-                      加入社群 →
-                    </a>
-                  )}
+                  <div className="flex flex-wrap gap-3 mt-1">
+                    {c.email && (
+                      <a href={`mailto:${c.email}`}
+                        className="text-xs font-medium hover:opacity-70"
+                        style={{ color: "#6B4423" }}>
+                        ✉️ {c.email}
+                      </a>
+                    )}
+                    {c.url && (
+                      <a href={c.url} target="_blank" rel="noopener noreferrer"
+                        className="text-xs font-medium hover:opacity-70"
+                        style={{ color: "#E8A818" }}>
+                        更多資訊 →
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
