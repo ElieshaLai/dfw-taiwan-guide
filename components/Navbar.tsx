@@ -333,6 +333,27 @@ export default function Navbar({ isHomePage = false }: { isHomePage?: boolean })
               <span>美食與購物</span>
               <span style={{ fontSize: "10px", marginLeft: "2px" }}>{foodOpen ? "▲" : "▼"}</span>
             </button>
+            {/* 社群與玩樂手機版 */}
+            <button
+              onClick={() => setCommunityOpen((v) => !v)}
+              ref={(el) => {
+                if (el && (pathname.startsWith("/community") || pathname.startsWith("/fun"))) {
+                  setTimeout(() => {
+                    el.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+                  }, 100);
+                }
+              }}
+              className="flex items-center gap-1.5 px-4 py-3 border-b-2 transition-all duration-150 whitespace-nowrap"
+              style={{
+                borderBottomColor: pathname.startsWith("/community") || pathname.startsWith("/fun") ? "#A63F24" : communityOpen ? "#C49A6C" : "transparent",
+                color: pathname.startsWith("/community") || pathname.startsWith("/fun") ? "#A63F24" : "#6B4423",
+                fontSize: "14px", fontWeight: 500, background: "none",
+              }}
+            >
+              <PartyPopper size={17} strokeWidth={1.8} />
+              <span>社群與玩樂</span>
+              <span style={{ fontSize: "10px", marginLeft: "2px" }}>{communityOpen ? "▲" : "▼"}</span>
+            </button>
             {navLinksAfter.map((link) => (
               <MobileTab key={link.href} href={link.href} label={link.label}
                 Icon={link.lucide} isActive={pathname.startsWith(link.href)} />
