@@ -33,9 +33,9 @@ const latestNews = [
 
 
 export default function Home() {
-  const [greeting, setGreeting] = useState<Greeting | null>(null);
+  const [greeting, setGreeting] = useState<Greeting>(() => getGreeting());
 
-  useEffect(() => { setGreeting(getGreeting()); }, []);
+  useEffect(() => { }, []);
 
 
   return (
@@ -49,7 +49,7 @@ export default function Home() {
           <div className="absolute inset-0 flex items-center justify-center">
             {/* 桌面版圖片 */}
             <Image
-              src="/hero.png"
+              src={greeting.hero}
               alt="DFW Taiwan Guide"
               fill
               className="hidden sm:block"
@@ -58,7 +58,7 @@ export default function Home() {
             />
             {/* 手機版圖片 */}
             <Image
-              src="/hero-mobile.png"
+              src={greeting.heroMobile}
               alt="DFW Taiwan Guide"
               fill
               className="sm:hidden"
