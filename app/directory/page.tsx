@@ -81,9 +81,7 @@ export default function DirectoryPage() {
             <Image src="/thumb-up-icon.png" alt="名片與推薦" width={32} height={32} />
             名片與推薦
           </h1>
-          <p className="text-sm mb-6" style={{ color: "#C49A6C" }}>
-            台灣人推薦的專業人士，找對人少走冤枉路
-          </p>
+
 
           <div className="flex flex-wrap gap-2 mb-6">
             {CATEGORIES.map(cat => {
@@ -96,7 +94,7 @@ export default function DirectoryPage() {
                     borderColor: isActive ? "#6B4423" : "#e8d8c4",
                     color: isActive ? "white" : "#6B4423",
                   }}>
-                  {categoryEmoji[cat]} {cat}
+                  {cat}
                 </button>
               );
             })}
@@ -145,7 +143,7 @@ export default function DirectoryPage() {
                     <h2 className="font-bold" style={{ color: "#6B4423", fontSize: "16px" }}>{e.name}</h2>
                     <span className="text-xs px-2 py-0.5 rounded-full shrink-0"
                       style={{ backgroundColor: "#F9F2E8", color: "#A63F24", border: "1px solid #e8d8c4" }}>
-                      {categoryEmoji[e.category]} {e.category}
+                      {e.category}
                     </span>
                   </div>
                   {e.title && (

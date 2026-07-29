@@ -47,7 +47,9 @@ export default function LifePage() {
             新生活指南
           </h1>
           <p className="text-sm mb-8" style={{ color: "#C49A6C" }}>
-            銀行、駕照、保險、搬家流程⋯ 一次搞懂達拉斯生活
+            LV.0 新手村<br/>
+            從銀行、駕照、電信到保險，陪你一一完成新手任務，快速展開 DFW 新生活！
+
           </p>
 
           {loading && <p style={{ color: "#C49A6C" }}>載入中⋯</p>}

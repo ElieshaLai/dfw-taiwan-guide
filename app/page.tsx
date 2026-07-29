@@ -7,13 +7,13 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 
-type Greeting = { zh: string; tailo: string; sub: string; subTailo: string };
+type Greeting = { zh: string; tailo: string; sub: string; subTailo: string; hero: string; heroMobile: string };
 
 function getGreeting(): Greeting {
   const hour = new Date().getHours();
-  if (hour >= 5 && hour < 12)  return { zh: "早安！", tailo: "gâu-tsá", sub: "咱做伙加油！", subTailo: "lán tsò-hué ka-iû" };
-  if (hour >= 12 && hour < 18) return { zh: "午安！", tailo: "ngóo-an", sub: "甲飽袂？", subTailo: "tsia̍h-pá--buē" };
-  return { zh: "晚安！", tailo: "buán-an", sub: "卡早睏！", subTailo: "khah-tsá khùn" };
+  if (hour >= 5 && hour < 12)  return { zh: "早安！", tailo: "gâu-tsá", sub: "咱做伙加油！", subTailo: "lán tsò-hué ka-iû", hero: "/hero-morning.png", heroMobile: "/hero-mobile-morning.png" };
+  if (hour >= 12 && hour < 18) return { zh: "午安！", tailo: "ngóo-an", sub: "甲飽袂？", subTailo: "tsia̍h-pá--buē", hero: "/hero-afternoon.png", heroMobile: "/hero-mobile-afternoon.png" };
+  return { zh: "晚安！", tailo: "buán-an", sub: "卡早睏！", subTailo: "khah-tsá khùn", hero: "/hero-evening.png", heroMobile: "/hero-mobile-evening.png" };
 }
 
 const keywords = [
