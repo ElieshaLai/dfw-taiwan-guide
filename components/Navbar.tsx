@@ -16,6 +16,8 @@ import {
 import {
   MapIcon,
   ShoppingBagIcon,
+  Users,
+  Laugh,
   BookOpen,
   Home,
   GraduationCap,
@@ -42,10 +44,14 @@ const navLinksBefore = [
 ];
 
 const navLinksAfter = [
-  { href: "/explore",   label: "社群與玩樂", lucide: PartyPopper,  lordicon: funIcon },
   { href: "/jobs",      label: "工作與求職", lucide: Briefcase,    lordicon: jobIcon },
   { href: "/directory", label: "名片與推薦", lucide: ContactRound, lordicon: recommendIcon },
   { href: "/events",    label: "活動日曆",   lucide: CalendarDays, lordicon: calendarIcon },
+];
+
+const communityLinks = [
+  { href: "/community", icon: <Users className="w-4 h-4" />,  title: "社群", description: "宗教、運動、團購等社群" },
+  { href: "/fun",       icon: <Laugh className="w-4 h-4" />,  title: "玩樂", description: "達拉斯好玩的地方和活動推薦" },
 ];
 
 const foodShoppingLinks = [
@@ -109,8 +115,10 @@ export default function Navbar({ isHomePage = false }: { isHomePage?: boolean })
   const pathname = usePathname();
   const [query, setQuery] = useState("");
   const [foodOpen, setFoodOpen] = useState(false);
+  const [communityOpen, setCommunityOpen] = useState(false);
   const [scrolled, setScrolled] = useState(!isHomePage);
   const foodPlayerRef = useRef<Player>(null);
+  const funPlayerRef = useRef<Player>(null);
   const mobileNavRef = useRef<HTMLDivElement>(null);
 
   const isFoodActive = pathname.startsWith("/restaurants") || pathname.startsWith("/shopping");
@@ -251,6 +259,43 @@ export default function Navbar({ isHomePage = false }: { isHomePage?: boolean })
               </NavigationMenuList>
             </NavigationMenu>
 
+            {/* 社群與玩樂下拉 */}
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger
+                    className="flex items-center gap-2 px-4 py-3 border-b-2 bg-transparent rounded-none h-auto text-sm font-medium"
+                    style={{
+                      borderBottomColor: pathname.startsWith("/community") || pathname.startsWith("/fun") ? "#A63F24" : "transparent",
+                      color: pathname.startsWith("/community") || pathname.startsWith("/fun") ? "#A63F24" : "#6B4423",
+                      backgroundColor: "transparent",
+                    }}
+                    onMouseEnter={() => funPlayerRef.current?.playFromBeginning()}
+                  >
+                    <Player ref={funPlayerRef} icon={funIcon as any} size={24} />
+                    <span>社群與玩樂</span>
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="w-56 p-2">
+                      {communityLinks.map((item) => (
+                        <li key={item.href}>
+                          <NavigationMenuLink render={
+                            <Link href={item.href} className="flex items-start gap-3 p-3 rounded-lg hover:bg-amber-50">
+                              <span className="mt-0.5 shrink-0" style={{ color: "#A63F24" }}>{item.icon}</span>
+                              <div>
+                                <div className="text-sm font-semibold mb-0.5" style={{ color: "#6B4423" }}>{item.title}</div>
+                                <div className="text-xs" style={{ color: "#C49A6C" }}>{item.description}</div>
+                              </div>
+                            </Link>
+                          } />
+                        </li>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+
             {navLinksAfter.map((link) => (
               <DesktopTab key={link.href} href={link.href} label={link.label}
                 lordicon={link.lordicon} isActive={pathname.startsWith(link.href)} />
@@ -295,6 +340,27 @@ export default function Navbar({ isHomePage = false }: { isHomePage?: boolean })
           </div>
         </div>
       </div>
+
+      {/* 手機版社群子選單 */}
+      {communityOpen && (
+        <div className="sm:hidden fixed left-0 right-0 z-50 shadow-lg"
+          style={{ top: "120px", backgroundColor: "white", border: "1px solid #e8d8c4", borderTop: "none" }}>
+          <Link href="/community" onClick={() => setCommunityOpen(false)}
+            className="flex items-center gap-3 px-6 py-4 transition-colors"
+            style={{ color: "#6B4423", borderBottom: "1px solid #f0e4d0" }}>
+            <PartyPopper size={16} style={{ color: "#A63F24" }} />
+            <span className="text-sm font-medium">社群</span>
+            <span className="text-xs ml-1" style={{ color: "#C49A6C" }}>宗教、運動、團購等社群</span>
+          </Link>
+          <Link href="/fun" onClick={() => setCommunityOpen(false)}
+            className="flex items-center gap-3 px-6 py-4 transition-colors"
+            style={{ color: "#6B4423" }}>
+            <PartyPopper size={16} style={{ color: "#A63F24" }} />
+            <span className="text-sm font-medium">玩樂</span>
+            <span className="text-xs ml-1" style={{ color: "#C49A6C" }}>達拉斯好玩的地方和活動推薦</span>
+          </Link>
+        </div>
+      )}
 
       {/* 手機版美食子選單 */}
       {foodOpen && (

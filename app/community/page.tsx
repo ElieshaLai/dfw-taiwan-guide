@@ -67,7 +67,7 @@ export default function ExplorePage() {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage style={{ color: "#6B4423", fontWeight: 600 }}>社群與玩樂</BreadcrumbPage>
+                <BreadcrumbPage style={{ color: "#6B4423", fontWeight: 600 }}>社群</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
