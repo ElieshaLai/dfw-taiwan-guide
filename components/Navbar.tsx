@@ -131,6 +131,12 @@ export default function Navbar({ isHomePage = false }: { isHomePage?: boolean })
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isHomePage]);
 
+  // 切換頁面時關閉所有下拉
+  useEffect(() => {
+    setFoodOpen(false);
+    setCommunityOpen(false);
+  }, [pathname]);
+
   // Mobile tab auto-scroll
   useEffect(() => {
     const el = mobileNavRef.current;
@@ -369,14 +375,14 @@ export default function Navbar({ isHomePage = false }: { isHomePage?: boolean })
           <Link href="/community" onClick={() => setCommunityOpen(false)}
             className="flex items-center gap-3 px-6 py-4 transition-colors"
             style={{ color: "#6B4423", borderBottom: "1px solid #f0e4d0" }}>
-            <PartyPopper size={16} style={{ color: "#A63F24" }} />
+            <Users size={16} style={{ color: "#A63F24" }} />
             <span className="text-sm font-medium">社群</span>
             <span className="text-xs ml-1" style={{ color: "#C49A6C" }}>宗教、運動、團購等社群</span>
           </Link>
           <Link href="/fun" onClick={() => setCommunityOpen(false)}
             className="flex items-center gap-3 px-6 py-4 transition-colors"
             style={{ color: "#6B4423" }}>
-            <PartyPopper size={16} style={{ color: "#A63F24" }} />
+            <Laugh size={16} style={{ color: "#A63F24" }} />
             <span className="text-sm font-medium">玩樂</span>
             <span className="text-xs ml-1" style={{ color: "#C49A6C" }}>達拉斯好玩的地方和活動推薦</span>
           </Link>
