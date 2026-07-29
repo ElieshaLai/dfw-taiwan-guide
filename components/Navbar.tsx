@@ -368,6 +368,14 @@ export default function Navbar({ isHomePage = false }: { isHomePage?: boolean })
         </div>
       </div>
 
+      {/* 點外面關閉下拉的遮罩 */}
+      {(foodOpen || communityOpen) && (
+        <div
+          className="sm:hidden fixed inset-0 z-40"
+          onClick={() => { setFoodOpen(false); setCommunityOpen(false); }}
+        />
+      )}
+
       {/* 手機版社群子選單 */}
       {communityOpen && (
         <div className="sm:hidden fixed left-0 right-0 z-50 shadow-lg"
