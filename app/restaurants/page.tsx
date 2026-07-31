@@ -21,7 +21,7 @@ type Restaurant = {
   id: number;
   name: string;
   category: string;
-  subcategory: string;
+  subcategory: string[];
   city: string;
   address: string;
   phone: string;
@@ -55,7 +55,7 @@ export default function RestaurantsPage() {
         setError(error.message);
       } else {
         setRestaurants(data || []);
-        const uniqueCities = [...new Set((data || []).map((r) => r.city).filter(Boolean))].sort();
+        const uniqueCities = [...new Set((data || []).map((r: any) => r.city).filter(Boolean))].sort();
         setCities(uniqueCities);
       }
       setLoading(false);
@@ -67,8 +67,8 @@ export default function RestaurantsPage() {
   const availableSubs = selectedCats.length > 0
     ? [...new Set(
         restaurants
-          .filter((r) => selectedCats.includes(r.category) && r.subcategory)
-          .map((r) => r.subcategory)
+          .filter((r) => selectedCats.includes(r.category) && r.subcategory?.length > 0)
+          .flatMap((r) => r.subcategory)
       )].sort()
     : [];
 
@@ -78,7 +78,7 @@ export default function RestaurantsPage() {
       // 子分類只保留仍然有效的
       setSelectedSubs((subs) =>
         subs.filter((sub) =>
-          restaurants.some((r) => next.includes(r.category) && r.subcategory === sub)
+          restaurants.some((r) => next.includes(r.category) && r.subcategory?.includes(sub))
         )
       );
       return next;
@@ -105,7 +105,7 @@ export default function RestaurantsPage() {
 
   const filtered = restaurants.filter((r) => {
     const catMatch = selectedCats.length === 0 || selectedCats.includes(r.category);
-    const subMatch = selectedSubs.length === 0 || selectedSubs.includes(r.subcategory);
+    const subMatch = selectedSubs.length === 0 || selectedSubs.some(s => r.subcategory?.includes(s));
     const cityMatch = selectedCities.length === 0 || selectedCities.includes(r.city);
     return catMatch && subMatch && cityMatch;
   });
@@ -300,14 +300,15 @@ export default function RestaurantsPage() {
                     >
                       {r.category}
                     </span>
-                    {r.subcategory && (
+                    {r.subcategory?.map((sub) => (
                       <span
+                        key={sub}
                         className="text-xs px-2 py-0.5 rounded-full"
                         style={{ backgroundColor: "#fff0e0", color: "#A63F24", border: "1px solid #e8d8c4" }}
                       >
-                        {r.subcategory}
+                        {sub}
                       </span>
-                    )}
+                    ))}
                   </div>
                 </div>
                 <p className="text-xs mb-2" style={{ color: "#C49A6C" }}>

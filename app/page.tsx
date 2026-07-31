@@ -7,13 +7,13 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 
-type Greeting = { zh: string; tailo: string; sub: string; subTailo: string; hero: string; heroMobile: string };
+type Greeting = { zh: string; tailo: string; sub: string; subTailo: string; hero: string; heroMobile: string; textColor: string };
 
 function getGreeting(): Greeting {
   const hour = new Date().getHours();
-  if (hour >= 5 && hour < 12)  return { zh: "早安！", tailo: "gâu-tsá", sub: "咱做伙加油！", subTailo: "lán tsò-hué ka-iû", hero: "/hero-morning.png", heroMobile: "/hero-mobile-morning.png" };
-  if (hour >= 12 && hour < 18) return { zh: "午安！", tailo: "ngóo-an", sub: "甲飽袂？", subTailo: "tsia̍h-pá--buē", hero: "/hero-afternoon.png", heroMobile: "/hero-mobile-afternoon.png" };
-  return { zh: "晚安！", tailo: "buán-an", sub: "卡早睏！", subTailo: "khah-tsá khùn", hero: "/hero-evening.png", heroMobile: "/hero-mobile-evening.png" };
+  if (hour >= 5 && hour < 12)  return { zh: "早安！", tailo: "gâu-tsá", sub: "咱做伙加油！", subTailo: "lán tsò-hué ka-iû", hero: "/hero-morning.png", heroMobile: "/hero-mobile-morning.png", textColor: "#4a2010" };
+  if (hour >= 12 && hour < 18) return { zh: "午安！", tailo: "ngóo-an", sub: "甲飽袂？", subTailo: "tsia̍h-pá--buē", hero: "/hero-afternoon.png", heroMobile: "/hero-mobile-afternoon.png", textColor: "#4a2010" };
+  return { zh: "晚安！", tailo: "buán-an", sub: "卡早睏！", subTailo: "khah-tsá khùn", hero: "/hero-evening.png", heroMobile: "/hero-mobile-evening.png", textColor: "#E8A818" };
 }
 
 const keywords = [
@@ -82,7 +82,7 @@ export default function Home() {
               <div className="flex items-start" style={{ marginBottom: "20px" }}>
                 <div className="flex flex-col items-center">
                   <span className="font-black"
-                    style={{ fontSize: "clamp(64px, 12vw, 110px)", color: "#4a2010", textShadow: "0 2px 20px rgba(255,255,255,0.3)", lineHeight: 1 }}>
+                    style={{ fontSize: "clamp(64px, 12vw, 110px)", color: greeting.textColor, textShadow: "0 2px 20px rgba(0,0,0,0.2)", lineHeight: 1 }}>
                     {greeting?.zh.replace("！", "").replace("？", "")}
                   </span>
                   <span className="font-medium"
@@ -91,7 +91,7 @@ export default function Home() {
                   </span>
                 </div>
                 <span className="font-black"
-                  style={{ fontSize: "clamp(64px, 12vw, 110px)", color: "#4a2010", lineHeight: 1 }}>
+                  style={{ fontSize: "clamp(64px, 12vw, 110px)", color: greeting.textColor, lineHeight: 1 }}>
                   {greeting?.zh.includes("！") ? "！" : "？"}
                 </span>
               </div>
@@ -100,7 +100,7 @@ export default function Home() {
               <div className="flex items-start">
                 <div className="flex flex-col items-center">
                   <span className="font-black whitespace-nowrap"
-                    style={{ fontSize: "clamp(48px, 10vw, 110px)", color: "#4a2010", textShadow: "0 2px 20px rgba(255,255,255,0.3)", lineHeight: 1 }}>
+                    style={{ fontSize: "clamp(48px, 10vw, 110px)", color: greeting.textColor, textShadow: "0 2px 20px rgba(0,0,0,0.2)", lineHeight: 1 }}>
                     {greeting?.sub.replace("！", "").replace("？", "")}
                   </span>
                   <span className="font-medium"
@@ -109,7 +109,7 @@ export default function Home() {
                   </span>
                 </div>
                 <span className="font-black"
-                  style={{ fontSize: "clamp(48px, 10vw, 110px)", color: "#4a2010", lineHeight: 1 }}>
+                  style={{ fontSize: "clamp(48px, 10vw, 110px)", color: greeting.textColor, lineHeight: 1 }}>
                   {greeting?.sub.includes("！") ? "！" : "？"}
                 </span>
               </div>
