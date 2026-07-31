@@ -40,7 +40,7 @@ export async function getArticles(category?: string): Promise<Article[]> {
         filter,
         sorts: [{ property: "Date", direction: "descending" }],
       }),
-      next: { revalidate: 3600 },
+      cache: "no-store",
     }
   );
 
@@ -77,7 +77,7 @@ export async function getArticleBySlug(slug: string) {
           ],
         },
       }),
-      next: { revalidate: 3600 },
+      cache: "no-store",
     }
   );
 
@@ -95,7 +95,7 @@ export async function getArticleBySlug(slug: string) {
         Authorization: `Bearer ${process.env.NOTION_TOKEN}`,
         "Notion-Version": "2022-06-28",
       },
-      next: { revalidate: 3600 },
+      cache: "no-store",
     }
   );
 
