@@ -7,13 +7,13 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 
-type Greeting = { zh: string; tailo: string; sub: string; subTailo: string; hero: string; heroMobile: string; textColor: string };
+type Greeting = { zh: string; tailo: string; sub: string; subTailo: string; hero: string; heroMobile: string; textColor: string; tailoColor: string; scrollColor: string };
 
 function getGreeting(): Greeting {
   const hour = new Date().getHours();
-  if (hour >= 5 && hour < 12)  return { zh: "早安！", tailo: "gâu-tsá", sub: "咱做伙加油！", subTailo: "lán tsò-hué ka-iû", hero: "/hero-morning.png", heroMobile: "/hero-mobile-morning.png", textColor: "#4a2010" };
-  if (hour >= 12 && hour < 18) return { zh: "午安！", tailo: "ngóo-an", sub: "甲飽袂？", subTailo: "tsia̍h-pá--buē", hero: "/hero-afternoon.png", heroMobile: "/hero-mobile-afternoon.png", textColor: "#4a2010" };
-  return { zh: "晚安！", tailo: "buán-an", sub: "卡早睏！", subTailo: "khah-tsá khùn", hero: "/hero-evening.png", heroMobile: "/hero-mobile-evening.png", textColor: "#E8A818" };
+  if (hour >= 5 && hour < 12)  return { zh: "早安！", tailo: "gâu-tsá", sub: "咱做伙加油！", subTailo: "lán tsò-hué ka-iû", hero: "/hero-morning.png", heroMobile: "/hero-mobile-morning.png", textColor: "#4a2010", tailoColor: "#6B4423", scrollColor: "#6B4423" };
+  if (hour >= 12 && hour < 18) return { zh: "午安！", tailo: "ngóo-an", sub: "甲飽袂？", subTailo: "tsia̍h-pá--buē", hero: "/hero-afternoon.png", heroMobile: "/hero-mobile-afternoon.png", textColor: "#4a2010", tailoColor: "#6B4423", scrollColor: "#6B4423" };
+  return { zh: "晚安！", tailo: "buán-an", sub: "卡早睏！", subTailo: "khah-tsá khùn", hero: "/hero-evening.png", heroMobile: "/hero-mobile-evening.png", textColor: "#E8A818", tailoColor: "#C49A6C", scrollColor: "#C49A6C" };
 }
 
 const keywords = [
@@ -86,7 +86,7 @@ export default function Home() {
                     {greeting?.zh.replace("！", "").replace("？", "")}
                   </span>
                   <span className="font-medium"
-                    style={{ fontSize: "clamp(16px, 2.2vw, 24px)", color: "#6B4423", opacity: 0.7, letterSpacing: "0.12em", marginTop: "10px" }}>
+                    style={{ fontSize: "clamp(16px, 2.2vw, 24px)", color: greeting.tailoColor, opacity: 0.7, letterSpacing: "0.12em", marginTop: "10px" }}>
                     {greeting?.tailo}
                   </span>
                 </div>
@@ -104,7 +104,7 @@ export default function Home() {
                     {greeting?.sub.replace("！", "").replace("？", "")}
                   </span>
                   <span className="font-medium"
-                    style={{ fontSize: "clamp(16px, 2.2vw, 24px)", color: "#6B4423", opacity: 0.7, letterSpacing: "0.12em", marginTop: "10px" }}>
+                    style={{ fontSize: "clamp(16px, 2.2vw, 24px)", color: greeting.tailoColor, opacity: 0.7, letterSpacing: "0.12em", marginTop: "10px" }}>
                     {greeting?.subTailo}
                   </span>
                 </div>
@@ -122,7 +122,7 @@ export default function Home() {
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1 }}
             className="absolute bottom-10 left-0 right-0 flex flex-col items-center gap-3 z-10"
-            style={{ color: "#6B4423" }}
+            style={{ color: greeting.scrollColor }}
           >
             <span className="font-medium tracking-widest uppercase" style={{ fontSize: "15px" }}>Scroll</span>
             <motion.svg
