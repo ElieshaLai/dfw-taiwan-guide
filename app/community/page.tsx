@@ -26,10 +26,9 @@ type Community = {
   image_url: string;
 };
 
-const CATEGORIES = ["宗教", "運動", "團購", "親子", "同鄉", "其他"];
-
 export default function ExplorePage() {
   const [communities, setCommunities] = useState<Community[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
   const [selected, setSelected] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -41,6 +40,8 @@ export default function ExplorePage() {
         .eq("is_published", true)
         .order("name");
       setCommunities(data || []);
+      const uniqueCats = [...new Set((data || []).map((c: any) => c.category).filter(Boolean))].sort();
+      setCategories(uniqueCats);
       setLoading(false);
     }
     fetch();
@@ -78,7 +79,7 @@ export default function ExplorePage() {
           </h1>
 
           <div className="flex flex-wrap gap-2 mb-6">
-            {CATEGORIES.map(cat => {
+            {categories.map(cat => {
               const isActive = selected.includes(cat);
               return (
                 <button key={cat} onClick={() => toggle(cat)}
