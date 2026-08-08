@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import { Player } from "@lordicon/react";
 import {
@@ -113,7 +113,15 @@ function MobileTab({ href, label, Icon, isActive }: {
 
 export default function Navbar({ isHomePage = false }: { isHomePage?: boolean }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [query, setQuery] = useState("");
+
+  function handleSearch(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Enter" && query.trim()) {
+      router.push(`/search?q=${encodeURIComponent(query.trim())}`);
+      setQuery("");
+    }
+  }
   const [foodOpen, setFoodOpen] = useState(false);
   const [communityOpen, setCommunityOpen] = useState(false);
   const [scrolled, setScrolled] = useState(!isHomePage);
@@ -205,6 +213,7 @@ export default function Navbar({ isHomePage = false }: { isHomePage?: boolean })
             placeholder="搜尋餐廳、學校、資訊⋯"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={handleSearch}
             className="bg-transparent text-sm outline-none w-full"
             style={{ color: "white" }}
           />
