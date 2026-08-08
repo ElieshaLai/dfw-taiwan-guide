@@ -13,21 +13,29 @@ export async function GET(req: NextRequest) {
   const q = req.nextUrl.searchParams.get("q")?.trim();
   if (!q || q.length < 1) return NextResponse.json({ results: [] });
 
-  const [restaurants, community, directory, articles, events] = await Promise.all([
-    // 餐廳
+  const [restaurants, restaurantsSub, community, directory, events, articles] = await Promise.all([
+    // 餐廳（一般欄位）
     supabase
       .from("restaurants")
-      .select("id, name, category, city, description")
+      .select("id, name, category, city, description, subcategory")
       .eq("is_published", true)
-      .or(`name.ilike.%${q}%,description.ilike.%${q}%,city.ilike.%${q}%`)
+      .or(`name.ilike.%${q}%,description.ilike.%${q}%,city.ilike.%${q}%,category.ilike.%${q}%`)
+      .limit(10),
+
+    // 餐廳（subcategory array）
+    supabase
+      .from("restaurants")
+      .select("id, name, category, city, description, subcategory")
+      .eq("is_published", true)
+      .contains("subcategory", [q])
       .limit(5),
 
     // 社群
     supabase
       .from("community")
-      .select("id, name, category, description")
+      .select("id, name, category, description, location")
       .eq("is_published", true)
-      .or(`name.ilike.%${q}%,description.ilike.%${q}%`)
+      .or(`name.ilike.%${q}%,description.ilike.%${q}%,location.ilike.%${q}%`)
       .limit(5),
 
     // 名片
@@ -81,9 +89,13 @@ export async function GET(req: NextRequest) {
       category: page.properties.Category?.select?.name ?? "",
     }));
 
+  // 合併餐廳結果去重
+  const allRestaurants = [...(restaurants.data || []), ...(restaurantsSub.data || [])];
+  const uniqueRestaurants = allRestaurants.filter((r, i, arr) => arr.findIndex((x: any) => x.id === r.id) === i).slice(0, 10);
+
   return NextResponse.json({
     results: {
-      restaurants: restaurants.data || [],
+      restaurants: uniqueRestaurants,
       community: community.data || [],
       directory: directory.data || [],
       articles: filteredArticles,
